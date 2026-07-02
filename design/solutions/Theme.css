@@ -1,0 +1,145 @@
+/* ==========================================================================
+   Saturday Services — Solutions Vertical Theme
+   Inherits saturday-core; this file defines ONLY the Solutions layer.
+   Load order: saturday-core/Variables.css → saturday-core/Theme.css →
+   solutions/Variables.css → solutions/Theme.css
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Score chip
+   -------------------------------------------------------------------------- */
+
+.score-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--hairline);
+  padding: 6px 16px;
+  font-family: var(--font-ui);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-main);
+}
+
+.score-chip--leader {
+  color: var(--accent-solutions);
+}
+
+/* --------------------------------------------------------------------------
+   Player badge
+   -------------------------------------------------------------------------- */
+
+.player-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--hairline);
+  padding: 4px 10px;
+  font-family: var(--font-ui);
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-micro);
+  color: var(--color-text-main);
+  clip-path: polygon(4px 0%, 100% 0%, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0% 100%, 0% 4px);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+.player-badge--active-turn {
+  border-color: var(--accent-solutions);
+  box-shadow: 0 0 12px var(--accent-solutions-glow);
+}
+
+/* --------------------------------------------------------------------------
+   Trivia timer
+   -------------------------------------------------------------------------- */
+
+.trivia-timer {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trivia-timer__track {
+  stroke: var(--hairline);
+  fill: none;
+  stroke-width: 4;
+}
+
+.trivia-timer__fill {
+  stroke: var(--accent-solutions);
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  transform-origin: center;
+  transform: rotate(-90deg);
+  transition: stroke-dashoffset var(--duration-standard) linear;
+}
+
+.trivia-timer__numeral {
+  position: absolute;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-main);
+}
+
+.trivia-timer--urgent .trivia-timer__fill,
+.trivia-timer--urgent .trivia-timer__numeral {
+  animation: timer-pulse 600ms ease-in-out infinite;
+}
+
+@keyframes timer-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* --------------------------------------------------------------------------
+   Hex tile
+   -------------------------------------------------------------------------- */
+
+.hex-tile {
+  position: relative;
+  aspect-ratio: 1 / 0.866;
+  background: var(--color-bg-surface);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--hairline);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              background var(--duration-fast) var(--ease-standard);
+}
+
+.hex-tile--selected {
+  border-color: var(--accent-solutions);
+  background: var(--accent-solutions-wash);
+}
+
+.hex-tile__label {
+  font-family: var(--font-ui);
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-micro);
+  color: var(--color-text-main);
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   Solutions-scoped button/badge overrides (accent binding only)
+   -------------------------------------------------------------------------- */
+
+.btn--primary,
+.badge--live {
+  --accent-current: var(--accent-solutions);
+}
+
+.btn--primary {
+  min-height: 48px; /* game-night distance-legible touch target */
+}

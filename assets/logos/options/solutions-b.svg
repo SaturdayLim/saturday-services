@@ -1,0 +1,23 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Saturday Solutions card-back S">
+  <rect width="512" height="512" fill="#0B0C10"/>
+  <!-- Card Back S: titanium playing card (5:7), double filled-band border frame,
+       bold geometric S emblem in Neon Yellow, two diamond pips in opposite corners. -->
+  <!-- Double border frame built from nested filled rounded-rects (chrome band / face). -->
+  <rect x="106" y="46" width="300" height="420" rx="24" fill="#C0C0C0"/>
+  <rect x="116" y="56" width="280" height="400" rx="15" fill="#1F2833"/>
+  <rect x="124" y="64" width="264" height="384" rx="9"  fill="#C0C0C0"/>
+  <rect x="132" y="72" width="248" height="368" rx="4"  fill="#1F2833"/>
+  <!-- Diamond pips, opposite corners, Neon Yellow -->
+  <g fill="#FFE600">
+    <path d="M 155.0,81.0 170.0,96.0 155.0,111.0 140.0,96.0 Z"/>
+    <path d="M 357.0,401.0 372.0,416.0 357.0,431.0 342.0,416.0 Z"/>
+  </g>
+  <!-- Bold geometric S counterform (union of 5 rects) in Neon Yellow -->
+  <g fill="#FFE600">
+    <rect x="181" y="149" width="150" height="48"/>
+    <rect x="181" y="232" width="150" height="48"/>
+    <rect x="181" y="315" width="150" height="48"/>
+    <rect x="181" y="149" width="48" height="131"/>
+    <rect x="283" y="232" width="48" height="131"/>
+  </g>
+</svg>

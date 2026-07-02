@@ -1,0 +1,20 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Saturday Solutions card-back S mono">
+  <!-- Mono Card Back S: double border as evenodd rings, S + pips solid, all currentColor. -->
+  <g fill="currentColor" fill-rule="evenodd">
+    <!-- Outer border band (ring) -->
+    <path d="M 130.0,46.0 H 382.0 A 24.0,24.0 0 0 1 406.0,70.0 V 442.0 A 24.0,24.0 0 0 1 382.0,466.0 H 130.0 A 24.0,24.0 0 0 1 106.0,442.0 V 70.0 A 24.0,24.0 0 0 1 130.0,46.0 Z M 131.0,56.0 H 381.0 A 15.0,15.0 0 0 1 396.0,71.0 V 441.0 A 15.0,15.0 0 0 1 381.0,456.0 H 131.0 A 15.0,15.0 0 0 1 116.0,441.0 V 71.0 A 15.0,15.0 0 0 1 131.0,56.0 Z"/>
+    <!-- Inner border band (ring) -->
+    <path d="M 133.0,64.0 H 379.0 A 9.0,9.0 0 0 1 388.0,73.0 V 439.0 A 9.0,9.0 0 0 1 379.0,448.0 H 133.0 A 9.0,9.0 0 0 1 124.0,439.0 V 73.0 A 9.0,9.0 0 0 1 133.0,64.0 Z M 136.0,72.0 H 376.0 A 4.0,4.0 0 0 1 380.0,76.0 V 436.0 A 4.0,4.0 0 0 1 376.0,440.0 H 136.0 A 4.0,4.0 0 0 1 132.0,436.0 V 76.0 A 4.0,4.0 0 0 1 136.0,72.0 Z"/>
+  </g>
+  <g fill="currentColor">
+    <!-- Diamond pips -->
+    <path d="M 155.0,81.0 170.0,96.0 155.0,111.0 140.0,96.0 Z"/>
+    <path d="M 357.0,401.0 372.0,416.0 357.0,431.0 342.0,416.0 Z"/>
+    <!-- Bold geometric S (5-rect union) -->
+    <rect x="181" y="149" width="150" height="48"/>
+    <rect x="181" y="232" width="150" height="48"/>
+    <rect x="181" y="315" width="150" height="48"/>
+    <rect x="181" y="149" width="48" height="131"/>
+    <rect x="283" y="232" width="48" height="131"/>
+  </g>
+</svg>

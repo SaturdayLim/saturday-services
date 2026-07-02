@@ -1,0 +1,19 @@
+/* ==========================================================================
+   Saturday Services — Services Vertical Variables
+   Inherits saturday-core/Variables.css in full. This file defines ONLY the
+   electric-blue accent layer. Load saturday-core/Variables.css FIRST, then
+   this file, so --accent-current resolves correctly.
+   ========================================================================== */
+
+:root {
+  /* Services accent layer */
+  --accent-services: #00F0FF;
+  --accent-services-wash: rgba(0, 240, 255, 0.12);
+  --accent-services-glow: rgba(0, 240, 255, 0.4);
+
+  /* Scope the shared --accent-current to this vertical */
+  --accent-current: var(--accent-services);
+
+  /* Deck panels default to hero-scale chamfer on this vertical */
+  --chamfer-default: var(--chamfer-hero);
+}

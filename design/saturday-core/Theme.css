@@ -1,0 +1,283 @@
+/* ==========================================================================
+   Saturday Services — Core Theme
+   Base component styles shared by every vertical. Requires Variables.css.
+   Verticals (services/, shakes/, solutions/) layer accent overrides on top —
+   they should never redefine structure, only swap --accent-* references.
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--color-bg-base);
+  color: var(--color-text-main);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --------------------------------------------------------------------------
+   Chamfer utility — the house signature shape, applied via clip-path.
+   Never use border-radius for panels; radius is reserved for buttons/pills.
+   -------------------------------------------------------------------------- */
+
+.chamfer,
+.chamfer-hero {
+  clip-path: polygon(
+    var(--chamfer-compact) 0%,
+    100% 0%,
+    100% calc(100% - var(--chamfer-compact)),
+    calc(100% - var(--chamfer-compact)) 100%,
+    0% 100%,
+    0% var(--chamfer-compact)
+  );
+}
+
+.chamfer-hero {
+  clip-path: polygon(
+    var(--chamfer-hero) 0%,
+    100% 0%,
+    100% calc(100% - var(--chamfer-hero)),
+    calc(100% - var(--chamfer-hero)) 100%,
+    0% 100%,
+    0% var(--chamfer-hero)
+  );
+}
+
+/* Two-corner variant — cuts only the top-right and bottom-left, the most
+   common Saturday panel treatment (echoes ActiveTheory's asymmetric chrome). */
+.chamfer-corners-tr-bl {
+  clip-path: polygon(
+    0% 0%,
+    calc(100% - var(--chamfer-compact)) 0%,
+    100% var(--chamfer-compact),
+    100% 100%,
+    var(--chamfer-compact) 100%,
+    0% calc(100% - var(--chamfer-compact))
+  );
+}
+
+/* --------------------------------------------------------------------------
+   Panel — the chamfered container that replaces rounded cards everywhere.
+   -------------------------------------------------------------------------- */
+
+.panel {
+  background: var(--color-bg-base);
+  border: 1px solid var(--hairline);
+  padding: var(--card-padding);
+}
+
+.panel--surface {
+  background: var(--color-bg-surface);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-8);
+  font-family: var(--font-ui);
+  font-size: var(--text-ui);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  padding: 12px 24px;
+  border-radius: var(--radius-button);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+/* Primary — fill is set per-vertical via --accent-current (defaults to Services blue) */
+.btn--primary {
+  --accent-current: var(--accent-services);
+  background: var(--accent-current);
+  color: var(--color-bg-base);
+}
+
+.btn--primary:hover {
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent-current) 40%, transparent);
+}
+
+.btn--primary:focus-visible {
+  outline: 2px solid var(--accent-current);
+  outline-offset: 2px;
+}
+
+/* Ghost — transparent, hairline border, resolves to accent on hover */
+.btn--ghost {
+  --accent-current: var(--accent-services);
+  background: transparent;
+  border-color: var(--hairline);
+  color: var(--color-text-main);
+}
+
+.btn--ghost:hover {
+  border-color: var(--accent-current);
+  color: var(--accent-current);
+}
+
+/* --------------------------------------------------------------------------
+   Badges
+   -------------------------------------------------------------------------- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  font-family: var(--font-ui);
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--hairline);
+  background: transparent;
+  color: var(--color-text-muted);
+}
+
+.badge--live {
+  --accent-current: var(--accent-services);
+  border-color: var(--accent-current);
+  color: var(--accent-current);
+}
+
+.badge--soon {
+  border-color: var(--hairline);
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Navigation
+   -------------------------------------------------------------------------- */
+
+.nav-pill {
+  position: fixed;
+  top: var(--spacing-24);
+  right: var(--spacing-24);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-16);
+  padding: 8px 16px;
+  background: transparent;
+}
+
+.nav-pill__label {
+  font-family: var(--font-ui);
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--color-text-main);
+  text-decoration: none;
+}
+
+.nav-pill__divider {
+  width: 1px;
+  height: 12px;
+  background: var(--hairline);
+}
+
+/* --------------------------------------------------------------------------
+   Hairlines
+   -------------------------------------------------------------------------- */
+
+.hairline {
+  border: none;
+  border-top: 1px solid var(--hairline);
+  margin: 0;
+}
+
+.hairline--vertical {
+  width: 1px;
+  height: 100%;
+  background: var(--hairline);
+}
+
+/* --------------------------------------------------------------------------
+   Instrument micro-labels
+   -------------------------------------------------------------------------- */
+
+.micro-label {
+  font-family: var(--font-ui);
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-regular);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-micro);
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Editorial flourish — use sparingly, one per viewport
+   -------------------------------------------------------------------------- */
+
+.editorial {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: var(--text-editorial);
+  line-height: var(--leading-editorial);
+  color: var(--color-text-main);
+}
+
+/* --------------------------------------------------------------------------
+   Headings
+   -------------------------------------------------------------------------- */
+
+h1, .text-display-lg {
+  font-family: var(--font-display);
+  font-size: var(--text-display-lg);
+  line-height: var(--leading-display-lg);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-display-lg);
+}
+
+h2, .text-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-heading);
+  line-height: var(--leading-heading);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-heading);
+}
+
+h3, .text-heading-sm {
+  font-family: var(--font-display);
+  font-size: var(--text-heading-sm);
+  line-height: var(--leading-heading-sm);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-heading-sm);
+}
+
+/* --------------------------------------------------------------------------
+   Glass overlay — modals, popovers, toasts ONLY
+   -------------------------------------------------------------------------- */
+
+.glass-overlay {
+  background: var(--overlay-glass);
+  backdrop-filter: blur(var(--overlay-blur));
+  -webkit-backdrop-filter: blur(var(--overlay-blur));
+  border: 1px solid var(--hairline);
+  padding: var(--spacing-32);
+}
+
+/* --------------------------------------------------------------------------
+   Utility — set the active accent scope on any container
+   (Vertical Theme.css files override this value; default is Services blue.)
+   -------------------------------------------------------------------------- */
+
+:root {
+  --accent-current: var(--accent-services);
+}

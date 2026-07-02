@@ -1,0 +1,20 @@
+/* ==========================================================================
+   Saturday Services — Shakes Vertical Variables
+   Inherits saturday-core/Variables.css in full. This file defines ONLY the
+   copper accent layer. Load saturday-core/Variables.css FIRST, then this
+   file, so --accent-current resolves correctly.
+   ========================================================================== */
+
+:root {
+  /* Shakes accent layer */
+  --accent-shakes: #B87333;
+  --accent-shakes-light: #D4975C;
+  --accent-shakes-wash: rgba(184, 115, 51, 0.12);
+  --accent-shakes-glow: rgba(184, 115, 51, 0.4);
+
+  /* Scope the shared --accent-current to this vertical */
+  --accent-current: var(--accent-shakes);
+
+  /* Recipe cards default to compact chamfer on this vertical */
+  --chamfer-default: var(--chamfer-compact);
+}

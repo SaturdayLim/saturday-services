@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Saturday Services hub links",
+  "type": "object",
+  "required": ["links"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "vertical", "logo", "link", "status"],
+        "properties": {
+          "title": { "type": "string", "minLength": 1 },
+          "vertical": { "type": "string", "description": "services | shakes | solutions | mn — unknown values fall back to services accent" },
+          "logo": { "type": "string" },
+          "link": { "type": ["string", "null"], "description": "null = coming soon" },
+          "status": { "enum": ["live", "soon", "beta"] },
+          "blurb": { "type": "string" },
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["title", "link", "status"],
+              "properties": {
+                "title": { "type": "string" },
+                "link": { "type": ["string", "null"] },
+                "status": { "enum": ["live", "soon", "beta"] }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

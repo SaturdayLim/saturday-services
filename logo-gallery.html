@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Logo Gallery — Saturday Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&family=Elms+Sans:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0C10; --surface: #1F2833; --text: #F0F3F4; --muted: #8A9199;
+    --hairline: rgba(192,192,192,0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; padding: 48px clamp(20px, 6vw, 80px) 120px; }
+  header { margin-bottom: 56px; }
+  .eyebrow { font-family: 'Elms Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; color: var(--muted); }
+  h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin: 12px 0 8px; }
+  .note { font-size: 14px; color: var(--muted); line-height: 1.6; max-width: 640px; }
+  .note code { color: var(--text); background: var(--surface); padding: 1px 6px; border-radius: 3px; font-size: 12.5px; }
+  section { margin-top: 72px; border-top: 1px solid var(--hairline); padding-top: 28px; }
+  h2 { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; }
+  .accentline { font-family: 'Elms Sans', sans-serif; font-size: 11px; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 28px; }
+  .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .card { border: 1px solid var(--hairline); padding: 24px; clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px); }
+  .card h3 { font-family: 'Elms Sans', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; margin-bottom: 4px; }
+  .card h3 .star { color: #FFE600; }
+  .card p { font-size: 13px; color: var(--muted); line-height: 1.55; margin-bottom: 18px; }
+  .stagewrap { display: flex; align-items: center; justify-content: center; height: 200px; margin-bottom: 16px; }
+  .stagewrap .svgbox { width: 180px; height: 180px; color: #F0F3F4; }
+  .svgbox svg { width: 100%; height: 100%; display: block; }
+  .variants { display: flex; align-items: center; gap: 16px; border-top: 1px solid var(--hairline); padding-top: 14px; }
+  .v { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .v .svgbox { color: #F0F3F4; }
+  .v.light { background: #F0F3F4; border-radius: 4px; padding: 8px; }
+  .v.light .svgbox { color: #0B0C10; }
+  .v span { font-family: 'Elms Sans', sans-serif; font-size: 9px; letter-spacing: 0.12em; color: var(--muted); }
+  .v.light span { color: #4A5560; }
+  .s96 { width: 84px; height: 84px; }
+  .s57 { width: 57px; height: 57px; }
+</style>
+</head>
+<body>
+<header>
+  <span class="eyebrow">SATURDAY SERVICES — DESIGN SUITE</span>
+  <h1>Logo Gallery</h1>
+  <p class="note">Three options per mark. ★ marks the option currently deployed on the hub.
+  To change a default, copy the option over its final file, e.g.
+  <code>assets/logos/options/services-b.svg → assets/logos/services.svg</code> (and its <code>-mono</code> twin), commit, push.
+  The 57px tile approximates the 15mm loyalty-card print size.</p>
+</header>
+
+<section data-mark="services" data-accent="#00F0FF">
+  <h2>Saturday Services</h2>
+  <div class="accentline">PARENT MARK · ELECTRIC BLUE #00F0FF</div>
+  <div class="row" id="row-services"></div>
+</section>
+
+<section data-mark="shakes" data-accent="#B87333">
+  <h2>Saturday Shakes</h2>
+  <div class="accentline">BAR VERTICAL · COPPER #B87333</div>
+  <div class="row" id="row-shakes"></div>
+</section>
+
+<section data-mark="solutions" data-accent="#FFE600">
+  <h2>Saturday Solutions / Night Games</h2>
+  <div class="accentline">GAMES + PRINT VERTICAL · NEON YELLOW #FFE600</div>
+  <div class="row" id="row-solutions"></div>
+</section>
+
+<script>
+const OPTIONS = {
+  services: [
+    { id: 'a', name: 'Meridian S', star: true,  desc: 'Two interlocking chamfered arcs, monoline. The most reduced S of the family — favicon to hero sculpture.' },
+    { id: 'b', name: 'Badge S',    star: false, desc: 'Chamfered-octagon titanium plate, bright S, one blue notch. Reads as a seal or app icon.' },
+    { id: 'c', name: 'Terminal S', star: false, desc: 'Freestanding chamfered S with electric terminal caps — the accent lives at the endpoints.' },
+  ],
+  shakes: [
+    { id: 'a', name: 'Contour Shaker', star: false, desc: 'Double-line contour of the 2-tin boston shaker, faithful to the original sketch. The S emerges from the seam.' },
+    { id: 'b', name: 'Solid Tin S',    star: true,  desc: 'Two solid tins — light top, copper bottom — split by the ogee seam. Strongest small-size read.' },
+    { id: 'c', name: 'Pour S',        star: false, desc: 'The pour itself: one liquid S-ribbon with a falling drop. Used as the Flavour Lab mark on the hub.' },
+  ],
+  solutions: [
+    { id: 'a', name: 'Hex Path S', star: true,  desc: 'Nine hex tiles snake an S — a board-game path. Start and end tiles in yellow.' },
+    { id: 'b', name: 'Card Back S', star: false, desc: 'Playing-card back with a bold S emblem and corner pips. Natural loyalty-card face.' },
+    { id: 'c', name: 'Pip Chip S',  star: false, desc: 'Poker chip; the S spelled in dice pips. Terminal pips in yellow.' },
+  ],
+};
+
+async function inline(url, box) {
+  try {
+    const res = await fetch(url);
+    box.innerHTML = await res.text();
+    const svg = box.querySelector('svg');
+    if (svg) { svg.removeAttribute('width'); svg.removeAttribute('height'); }
+  } catch (e) { box.textContent = '×'; }
+}
+
+for (const [mark, opts] of Object.entries(OPTIONS)) {
+  const row = document.getElementById('row-' + mark);
+  for (const o of opts) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <h3>${o.star ? '<span class="star">★</span> ' : ''}OPTION ${o.id.toUpperCase()} — ${o.name.toUpperCase()}</h3>
+      <p>${o.desc}</p>
+      <div class="stagewrap"><div class="svgbox" data-src="assets/logos/options/${mark}-${o.id}.svg"></div></div>
+      <div class="variants">
+        <div class="v"><div class="svgbox s96" data-src="assets/logos/options/${mark}-${o.id}-mono.svg"></div><span>MONO 84</span></div>
+        <div class="v"><div class="svgbox s57" data-src="assets/logos/options/${mark}-${o.id}-mono.svg"></div><span>15MM</span></div>
+        <div class="v light"><div class="svgbox s57" data-src="assets/logos/options/${mark}-${o.id}-mono.svg"></div><span>PRINT</span></div>
+      </div>`;
+    row.appendChild(card);
+  }
+}
+document.querySelectorAll('.svgbox[data-src]').forEach((box) => inline(box.dataset.src, box));
+</script>
+</body>
+</html>

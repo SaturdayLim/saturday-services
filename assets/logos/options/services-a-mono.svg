@@ -1,0 +1,13 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Saturday Services — Meridian S mono">
+  <!-- MERIDIAN S (mono) : identical geometry, every fill currentColor.
+       The two half-rings + seam merge into one solid S at any single ink color. -->
+
+  <!-- Upper half-ring -->
+  <path fill="currentColor" d="M 272.07 179.85 L 297.89 117.97 A 89 89 0 1 0 256 288 L 256 224 A 25 25 0 1 1 272.07 179.85 Z"/>
+
+  <!-- Lower half-ring -->
+  <path fill="currentColor" d="M 256 224 A 93 93 0 1 1 211.54 401.10 L 237.36 339.22 A 29 29 0 1 0 256 288 Z"/>
+
+  <!-- Central seam (fills the passing gap so the S reads solid) -->
+  <path fill="currentColor" d="M 244 224 L 268 224 L 268 288 L 244 288 Z"/>
+</svg>

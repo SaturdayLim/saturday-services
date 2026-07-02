@@ -1,0 +1,25 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Saturday Services — Meridian S">
+  <!-- MERIDIAN S : reduced geometric monoline S.
+       Two interlocking half-ring arcs, monoline weight 64u (outer/inner radii differ by 64).
+       Upper bowl center (256,199) radius 57; lower bowl center (256,317) radius 61
+       (upper counter tightened for optical top/bottom balance).
+       Terminals cut with flat 45deg chamfers. Central seam glows electric blue
+       where the two arcs pass one another. -->
+
+  <!-- Upper half-ring (chrome) -->
+  <path fill="#C0C0C0" d="M 272.07 179.85 L 297.89 117.97 A 89 89 0 1 0 256 288 L 256 224 A 25 25 0 1 1 272.07 179.85 Z"/>
+
+  <!-- Lower half-ring (high-def white) -->
+  <path fill="#F0F3F4" d="M 256 224 A 93 93 0 1 1 211.54 401.10 L 237.36 339.22 A 29 29 0 1 0 256 288 Z"/>
+
+  <!-- Central seam : the single electric-blue element -->
+  <path fill="url(#seam)" d="M 244 224 L 268 224 L 268 288 L 244 288 Z"/>
+
+  <defs>
+    <linearGradient id="seam" x1="256" y1="224" x2="256" y2="288" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00F0FF" stop-opacity="0.55"/>
+      <stop offset="0.5" stop-color="#00F0FF"/>
+      <stop offset="1" stop-color="#00F0FF" stop-opacity="0.55"/>
+    </linearGradient>
+  </defs>
+</svg>

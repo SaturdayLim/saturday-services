@@ -1,0 +1,24 @@
+/* ==========================================================================
+   Saturday Services — Solutions Vertical Variables
+   Inherits saturday-core/Variables.css in full. This file defines ONLY the
+   neon-yellow accent layer. Load saturday-core/Variables.css FIRST, then
+   this file, so --accent-current resolves correctly.
+   ========================================================================== */
+
+:root {
+  /* Solutions accent layer */
+  --accent-solutions: #FFE600;
+  --accent-solutions-wash: rgba(255, 230, 0, 0.12);
+  --accent-solutions-glow: rgba(255, 230, 0, 0.4);
+
+  /* Scope the shared --accent-current to this vertical */
+  --accent-current: var(--accent-solutions);
+
+  /* Hex tile proportions (flat-top hexagon) */
+  --hex-ratio: 0.866;
+
+  /* Print production reference values — for documentation/build-script use,
+     not for direct CSS color (screen and print color spaces differ). */
+  --print-cmyk-solutions: "C0 M6 Y97 K0";
+  --print-min-mark-mm: 15mm;
+}

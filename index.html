@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Saturday Services — personal project hub">
+<title>Saturday Services</title>
+<link rel="icon" type="image/svg+xml" href="assets/logos/services.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&family=Instrument+Serif:ital@0;1&family=Elms+Sans:wght@400..700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Lato:wght@400;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<header class="chrome">
+  <div class="wordmark">SATURDAY<span>SERVICES</span></div>
+  <nav class="pillnav" aria-label="Site">
+    <a href="#deck">PROJECTS</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a href="logo-gallery.html">GALLERY</a>
+  </nav>
+</header>
+
+<main>
+  <section id="hero" aria-label="Saturday Services">
+    <div id="stage">
+      <img id="poster" src="assets/posters/services-poster.svg" alt="Saturday Services mark" width="420" height="420">
+    </div>
+    <p class="tagline">Every day is Saturday</p>
+    <a class="scrollhint" href="#deck" aria-label="Scroll to projects">ENTER <span aria-hidden="true">↓</span></a>
+  </section>
+
+  <section id="deck" aria-label="Projects">
+    <div class="deck-track" id="deckTrack" tabindex="0"></div>
+    <div class="deck-ui">
+      <button id="prev" class="deck-btn" aria-label="Previous project"><span aria-hidden="true">←</span></button>
+      <span id="counter" class="deck-counter">— / —</span>
+      <button id="next" class="deck-btn" aria-label="Next project"><span aria-hidden="true">→</span></button>
+    </div>
+  </section>
+</main>
+
+<footer class="micro">SATURDAY SERVICES — PERSONAL PROJECT HUB</footer>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

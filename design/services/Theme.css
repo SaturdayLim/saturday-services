@@ -1,0 +1,148 @@
+/* ==========================================================================
+   Saturday Services — Services Vertical Theme
+   Inherits saturday-core; this file defines ONLY the Services layer.
+   Load order: saturday-core/Variables.css → saturday-core/Theme.css →
+   services/Variables.css → services/Theme.css
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Hub wordmark
+   -------------------------------------------------------------------------- */
+
+.hub-wordmark {
+  position: fixed;
+  top: var(--spacing-24);
+  left: var(--spacing-24);
+  font-family: var(--font-display);
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-text-main);
+  z-index: 10;
+}
+
+/* --------------------------------------------------------------------------
+   Project deck panel
+   -------------------------------------------------------------------------- */
+
+.deck-panel {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-24);
+  background: var(--color-bg-base);
+  border: 1px solid var(--hairline);
+  clip-path: polygon(
+    0% 0%,
+    calc(100% - var(--chamfer-hero)) 0%,
+    100% var(--chamfer-hero),
+    100% 100%,
+    var(--chamfer-hero) 100%,
+    0% calc(100% - var(--chamfer-hero))
+  );
+  scroll-snap-align: start;
+  text-align: center;
+}
+
+.deck-panel__logo {
+  width: 96px;
+  height: 96px;
+  /* accent color applied inline per linked vertical, e.g. fill: var(--accent-shakes) */
+}
+
+.deck-panel__title {
+  font-family: var(--font-display);
+  font-size: var(--text-heading);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-heading);
+  color: var(--color-text-main);
+}
+
+/* --------------------------------------------------------------------------
+   Enter link — deck panel's primary affordance, not a filled button
+   -------------------------------------------------------------------------- */
+
+.enter-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  font-family: var(--font-ui);
+  font-size: var(--text-ui);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--accent-services);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+.enter-link:hover {
+  border-color: var(--accent-services);
+}
+
+/* --------------------------------------------------------------------------
+   3D centerpiece container (canvas mount point)
+   -------------------------------------------------------------------------- */
+
+.hero-centerpiece {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-base);
+  overflow: hidden;
+}
+
+.hero-centerpiece canvas {
+  filter: drop-shadow(0 0 24px var(--accent-services-glow));
+}
+
+/* --------------------------------------------------------------------------
+   Tagline — one editorial flourish, hero only
+   -------------------------------------------------------------------------- */
+
+.hero-tagline {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: var(--text-editorial);
+  color: var(--color-text-main);
+  text-align: center;
+  margin-top: var(--spacing-24);
+}
+
+/* --------------------------------------------------------------------------
+   Data-viz accent line
+   -------------------------------------------------------------------------- */
+
+.dataviz-line {
+  height: 2px;
+  background: var(--hairline);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.dataviz-line__active {
+  position: absolute;
+  inset: 0;
+  background: var(--accent-services);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-standard) var(--ease-standard);
+}
+
+/* --------------------------------------------------------------------------
+   Services-scoped button/badge overrides (accent binding only)
+   -------------------------------------------------------------------------- */
+
+.btn--primary,
+.badge--live {
+  --accent-current: var(--accent-services);
+}

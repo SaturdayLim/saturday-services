@@ -1,0 +1,148 @@
+/* ==========================================================================
+   Saturday Services — Shakes Vertical Theme
+   Inherits saturday-core; this file defines ONLY the Shakes layer.
+   Load order: saturday-core/Variables.css → saturday-core/Theme.css →
+   shakes/Variables.css → shakes/Theme.css
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Recipe card
+   -------------------------------------------------------------------------- */
+
+.recipe-card {
+  background: var(--color-bg-base);
+  border: 1px solid var(--hairline);
+  padding: var(--spacing-24);
+  clip-path: polygon(
+    var(--chamfer-compact) 0%,
+    100% 0%,
+    100% calc(100% - var(--chamfer-compact)),
+    calc(100% - var(--chamfer-compact)) 100%,
+    0% 100%,
+    0% var(--chamfer-compact)
+  );
+  transition: border-color var(--duration-standard) var(--ease-standard),
+              transform var(--duration-standard) var(--ease-standard),
+              box-shadow var(--duration-standard) var(--ease-standard);
+}
+
+.recipe-card:hover {
+  border-color: color-mix(in srgb, var(--accent-shakes) 40%, var(--hairline));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(184, 115, 51, 0.15);
+}
+
+.recipe-card__category {
+  font-family: var(--font-ui);
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--accent-shakes);
+}
+
+.recipe-card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-heading-sm);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-heading-sm);
+  color: var(--color-text-main);
+  margin: var(--spacing-8) 0 var(--spacing-16);
+}
+
+.recipe-card__method {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Ingredient chip
+   -------------------------------------------------------------------------- */
+
+.ingredient-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--hairline);
+  padding: 4px 12px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+}
+
+.ingredient-chip__name {
+  color: var(--color-text-main);
+}
+
+.ingredient-chip__measure {
+  color: var(--accent-shakes);
+}
+
+/* --------------------------------------------------------------------------
+   Measurement label (standalone callout)
+   -------------------------------------------------------------------------- */
+
+.measurement-label {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--accent-shakes);
+  font-variant-numeric: tabular-nums;
+  text-transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   Flavour-pairing motif
+   -------------------------------------------------------------------------- */
+
+.flavour-node {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--hairline);
+  padding: 4px 10px;
+  font-family: var(--font-ui);
+  font-size: var(--text-micro);
+  text-transform: uppercase;
+  color: var(--color-text-main);
+  clip-path: polygon(4px 0%, 100% 0%, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0% 100%, 0% 4px);
+}
+
+.flavour-pairing-line {
+  stroke: var(--accent-shakes-light);
+  stroke-opacity: 0.4;
+  stroke-width: 1px;
+  fill: none;
+  transition: stroke-opacity var(--duration-standard) var(--ease-standard);
+}
+
+.flavour-pairing-line--active,
+.flavour-node:hover ~ .flavour-pairing-line {
+  stroke-opacity: 1;
+  stroke: var(--accent-shakes);
+}
+
+/* --------------------------------------------------------------------------
+   Tasting note flourish
+   -------------------------------------------------------------------------- */
+
+.tasting-note {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: var(--text-editorial);
+  line-height: var(--leading-editorial);
+  color: var(--color-text-main);
+}
+
+/* --------------------------------------------------------------------------
+   Shakes-scoped button/badge overrides (accent binding only)
+   -------------------------------------------------------------------------- */
+
+.btn--primary,
+.badge--live {
+  --accent-current: var(--accent-shakes);
+}
