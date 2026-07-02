@@ -174,6 +174,7 @@ let idx = 0;
 let locked = false;
 
 function placeBrand() {
+  brand.classList.add('no-anim');
   brand.style.transform = 'none';
   const rect = brand.getBoundingClientRect();
   const vw = window.innerWidth, vh = window.innerHeight;
@@ -182,6 +183,8 @@ function placeBrand() {
   const ty = vh * 0.45 - rect.top - (rect.height * scale) / 2;
   brand.dataset.hero = `translate(${tx}px, ${ty}px) scale(${scale.toFixed(3)})`;
   applyBrand();
+  brand.classList.add('placed');
+  requestAnimationFrame(() => requestAnimationFrame(() => brand.classList.remove('no-anim')));
 }
 function applyBrand() {
   brand.style.transform = idx === 0 ? brand.dataset.hero : 'none';
@@ -247,6 +250,7 @@ function wireInput() {
 async function boot() {
   seedStars();
   resizeSpace();
+  placeBrand();
   requestAnimationFrame(drawSpace);
 
   let data = { links: [] };

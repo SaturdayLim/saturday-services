@@ -7,19 +7,20 @@
       "logo": "assets/logos/shakes-metallic.svg",
       "link": null,
       "status": "live",
-      "blurb": "The bar vertical.",
       "options": [
         {
           "title": "Backbar",
           "logo": "assets/logos/options/shakes-b.svg",
           "link": "https://saturdayshakes.vercel.app/",
-          "status": "live"
+          "status": "live",
+          "subtitle": "Recipes & Tips"
         },
         {
           "title": "Flavour Studio",
           "logo": "assets/logos/options/shakes-c.svg",
           "link": "https://the-lab-pearl-tau.vercel.app/app.html",
-          "status": "live"
+          "status": "live",
+          "subtitle": "Explore new combinations"
         }
       ]
     },

@@ -45,10 +45,13 @@ body[data-day] { background: var(--day-canvas); }
 /* ---------- brand: shared element, center-stage -> top-left corner ---------- */
 #brand {
   position: fixed; top: 26px; left: 30px; z-index: 30;
+  visibility: hidden;
   transform-origin: left top;
   transition: transform 950ms var(--ease-page);
   white-space: nowrap; cursor: default;
 }
+#brand.placed { visibility: visible; }
+#brand.no-anim { transition: none; }
 #brand .metal {
   font-family: var(--font-display); font-weight: 700;
   font-size: 17px; letter-spacing: 0.22em;
