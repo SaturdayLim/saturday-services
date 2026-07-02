@@ -4,14 +4,14 @@
     {
       "title": "Saturday Shakes",
       "vertical": "shakes",
-      "logo": "assets/logos/shakes.svg",
+      "logo": "assets/logos/shakes-metallic.svg",
       "link": null,
       "status": "live",
       "blurb": "The bar vertical.",
       "options": [
         {
           "title": "Backbar",
-          "logo": "assets/logos/options/shakes-a.svg",
+          "logo": "assets/logos/options/shakes-b.svg",
           "link": "https://saturdayshakes.vercel.app/",
           "status": "live"
         },
@@ -39,16 +39,17 @@
       "logo": "assets/logos/mn-monogram.png",
       "link": null,
       "status": "live",
-      "blurb": "Two people building a life together in software.",
       "options": [
         {
           "title": "Just Do Fin",
+          "subtitle": "Finance Tracker",
           "logo": "assets/logos/mn-dollar.svg",
           "link": "https://just-do-fin.vercel.app/",
           "status": "live"
         },
         {
           "title": "Just Do I Do",
+          "subtitle": "Wedding Media",
           "logo": "assets/logos/mn-rings.svg",
           "link": "https://mn-wedding.saturdayservices.workers.dev/",
           "status": "live"

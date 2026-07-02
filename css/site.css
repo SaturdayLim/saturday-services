@@ -1,4 +1,4 @@
-/* Saturday Services hub — continuous space stage, page-snap navigation.
+/* Saturday Services hub — continuous space stage, sidescrolling pages.
    Night theme is default; body[data-day] flips to the M&N daytime inversion. */
 :root {
   --bg-base: #0B0C10;
@@ -84,49 +84,21 @@ body[data-day] #brand .metal {
   white-space: nowrap;
   transition: opacity 600ms ease;
 }
-#hint {
-  position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
-  z-index: 20;
-  font-family: var(--font-ui); font-size: 11px; font-weight: 600;
-  letter-spacing: 0.2em; color: var(--muted);
-  padding: 8px 20px; border: 1px solid var(--hairline); border-radius: 500px;
-  transition: opacity 600ms ease;
-}
-#hint span { display: inline-block; animation: nudge 2.2s ease-in-out infinite; }
-@keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
-body.off-hero .tagline, body.off-hero #hint { opacity: 0; }
+body.off-hero .tagline { opacity: 0; }
 
-/* ---------- corner chrome ---------- */
-.pillnav {
-  position: fixed; top: 24px; right: 28px; z-index: 30;
-  display: flex; align-items: center; gap: 12px;
-  border: 1px solid var(--hairline); border-radius: 500px;
-  padding: 8px 18px; backdrop-filter: blur(12px);
-  transition: border-color 900ms ease;
-}
-.pillnav a, .pillnav button {
-  font-family: var(--font-ui); font-size: 11px; font-weight: 600;
-  letter-spacing: 0.14em; color: var(--ink); text-decoration: none;
-  background: none; border: none; cursor: pointer;
-  transition: color 300ms ease;
-}
-.pillnav a:hover, .pillnav button:hover { color: var(--accent-services); }
-body[data-day] .pillnav a:hover, body[data-day] .pillnav button:hover { color: var(--mn-forest); }
-.pillnav .rule { width: 20px; height: 1px; background: var(--hairline); }
-
-/* ---------- pages ---------- */
+/* ---------- pages: horizontal transit ---------- */
 .page {
   position: fixed; inset: 0; z-index: 10;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 22px; padding: 96px 24px 120px;
-  opacity: 0; transform: translateY(7vh); pointer-events: none;
+  opacity: 0; transform: translateX(64vw); pointer-events: none;
   transition: opacity var(--dur-page) var(--ease-page),
               transform var(--dur-page) var(--ease-page);
   --accent: var(--accent-services);
   --glow: rgba(0, 240, 255, 0.30);
   --glow-soft: rgba(0, 240, 255, 0.14);
 }
-.page.above { transform: translateY(-7vh); }
+.page.left { transform: translateX(-64vw); }
 .page.active { opacity: 1; transform: none; pointer-events: auto; }
 
 .page[data-vertical="shakes"] {
@@ -182,7 +154,7 @@ a.page-logo:hover svg, a.page-logo:hover img { transform: scale(1.04); }
   margin-top: 8px;
 }
 .option {
-  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
   text-decoration: none; color: var(--ink);
   transition: transform 400ms var(--ease-page);
 }
@@ -196,6 +168,11 @@ a.page-logo:hover svg, a.page-logo:hover img { transform: scale(1.04); }
   letter-spacing: 0.18em; text-transform: uppercase;
 }
 .page[data-vertical="mn"] .option .option-label { font-family: 'Lato', sans-serif; }
+.option .option-sub {
+  font-family: 'Pinyon Script', cursive; font-size: 20px;
+  color: var(--muted); text-transform: none; letter-spacing: 0;
+  margin-top: -4px;
+}
 .option .option-status {
   font-family: var(--font-ui); font-size: 9px; font-weight: 600;
   letter-spacing: 0.16em; color: var(--muted);
@@ -213,15 +190,15 @@ a.page-logo:hover svg, a.page-logo:hover img { transform: scale(1.04); }
   transition: color 300ms ease, border-color 300ms ease;
 }
 .night-return:hover { color: var(--mn-forest); border-color: var(--mn-forest); }
-.flourish {
-  font-family: 'Pinyon Script', cursive; font-size: 20px; color: var(--muted);
-}
 
-/* ---------- nav ui ---------- */
+/* ---------- nav ui: hidden on the hero ---------- */
 .deck-ui {
   position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
   z-index: 30; display: flex; align-items: center; gap: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 500ms ease;
 }
+body.off-hero .deck-ui { opacity: 1; pointer-events: auto; }
 .deck-btn {
   width: 40px; height: 40px; border-radius: 50%;
   background: transparent; border: 1px solid var(--hairline);
@@ -244,12 +221,10 @@ body[data-day] .deck-btn:hover { border-color: var(--mn-forest); color: var(--mn
 
 @media (max-width: 680px) {
   #brand { top: 20px; left: 18px; }
-  .pillnav { top: 16px; right: 14px; }
   .micro { display: none; }
   .night-return { top: 78px; }
   .page { gap: 16px; padding: 84px 18px 110px; }
 }
 @media (prefers-reduced-motion: reduce) {
   #brand, .page, #brand .metal { transition: none; animation: none; }
-  #hint span { animation: none; }
 }

@@ -1,5 +1,5 @@
-/* Saturday Services hub — persistent starfield + page-snap navigation.
-   Pages are driven by links.json; each entry is one full-viewport page. */
+/* Saturday Services hub — rotating starfield (night) / falling snow (day),
+   sidescrolling page snapping. Pages come from links.json; the hero is not counted. */
 
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const pagesEl = document.getElementById('pages');
@@ -9,27 +9,31 @@ const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 const pad = (n) => String(n).padStart(2, '0');
 
-/* ================= starfield: one continuous space background ================= */
+/* ================= space: rotating stars at night, grey snow by day ================= */
 const NIGHT_BG = [11, 12, 16];
 const DAY_BG = [253, 251, 247];
 const NIGHT_STAR = [240, 243, 244];
-const DAY_STAR = [74, 60, 49];
+const SNOW_GREY = [148, 152, 157];
 
 const space = document.getElementById('space');
 const ctx = space.getContext('2d');
 let stars = [];
 let themeT = 0;        // 0 = night, 1 = day
 let themeTarget = 0;
+let rot = 0;           // global rotation of the night field
+let fallClock = 0;     // global snow clock
 
 function seedStars() {
   const n = Math.round((window.innerWidth * window.innerHeight) / 11000);
   stars = Array.from({ length: Math.min(Math.max(n, 90), 240) }, () => ({
-    x: Math.random(),
-    y: Math.random(),
+    ang: Math.random() * Math.PI * 2,          // night: polar position
+    rad: Math.sqrt(Math.random()),
+    fx: Math.random(),                          // day: snow column + start
+    fy: Math.random(),
+    speed: 0.035 + Math.random() * 0.055,       // snow fall, screens/sec
     r: 0.5 + Math.random() * 1.4,
     phase: Math.random() * Math.PI * 2,
     tw: 0.4 + Math.random() * 0.8,
-    drift: 0.002 + Math.random() * 0.006,
   }));
 }
 function resizeSpace() {
@@ -46,24 +50,39 @@ function drawSpace(now) {
   const dt = Math.min((now - last) / 1000, 0.05);
   last = now;
   themeT += (themeTarget - themeT) * Math.min(dt * 3.2, 1);
+  if (!reduced) {
+    rot += dt * 0.016;          // slow rotation of the whole night sky
+    fallClock += dt;
+  }
 
   const w = window.innerWidth, h = window.innerHeight;
+  const cx = w / 2, cy = h / 2;
+  const maxR = Math.hypot(w, h) * 0.55;
   const [br, bg, bb] = mix(NIGHT_BG, DAY_BG, themeT);
   ctx.fillStyle = `rgb(${br},${bg},${bb})`;
   ctx.fillRect(0, 0, w, h);
 
-  const [sr, sg, sb] = mix(NIGHT_STAR, DAY_STAR, themeT);
-  const dim = 1 - themeT * 0.45; // daytime stars are softer
+  const [sr, sg, sb] = mix(NIGHT_STAR, SNOW_GREY, themeT);
   for (const s of stars) {
-    if (!reduced) {
-      s.phase += dt * s.tw;
-      s.y += dt * s.drift;
-      if (s.y > 1.02) { s.y = -0.02; s.x = Math.random(); }
-    }
-    const a = (0.35 + 0.5 * (0.5 + 0.5 * Math.sin(s.phase))) * dim;
-    ctx.fillStyle = `rgba(${sr},${sg},${sb},${a.toFixed(3)})`;
+    if (!reduced) s.phase += dt * s.tw * (1 - 0.6 * themeT);
+
+    // night position: rotating around screen center
+    const a = s.ang + rot;
+    const nx = cx + Math.cos(a) * s.rad * maxR;
+    const ny = cy + Math.sin(a) * s.rad * maxR;
+
+    // day position: falling like snow with a gentle sway
+    const dx = (s.fx + 0.018 * Math.sin(fallClock * 0.7 + s.phase)) * w;
+    const dy = (((s.fy + fallClock * s.speed) % 1.06) - 0.03) * h;
+
+    const x = lerp(nx, dx, themeT);
+    const y = lerp(ny, dy, themeT);
+
+    const twinkle = 0.5 + 0.5 * Math.sin(s.phase);
+    const alpha = lerp(0.30 + 0.55 * twinkle, 0.55 + 0.2 * twinkle, themeT);
+    ctx.fillStyle = `rgba(${sr},${sg},${sb},${alpha.toFixed(3)})`;
     ctx.beginPath();
-    ctx.arc(s.x * w, s.y * h, s.r, 0, Math.PI * 2);
+    ctx.arc(x, y, s.r + themeT * 0.5, 0, Math.PI * 2);
     ctx.fill();
   }
   requestAnimationFrame(drawSpace);
@@ -111,6 +130,7 @@ async function buildOption(opt) {
   box.appendChild(await logoNode(opt.logo, `${opt.title} mark`));
   a.appendChild(box);
   a.appendChild(el('span', 'option-label', opt.title));
+  if (opt.subtitle) a.appendChild(el('span', 'option-sub', opt.subtitle));
   a.appendChild(el('span', 'option-status', live ? 'LIVE' : 'SOON'));
   return a;
 }
@@ -118,7 +138,6 @@ async function buildOption(opt) {
 async function buildPage(item, idx) {
   const sec = el('section', 'page');
   sec.dataset.vertical = item.vertical || 'services';
-  if (item.theme === 'day') sec.dataset.theme = 'day';
 
   if (item.vertical === 'mn') {
     const back = el('button', 'night-return');
@@ -145,14 +164,12 @@ async function buildPage(item, idx) {
   } else if (item.status !== 'live') {
     sec.appendChild(el('span', 'badge badge--soon', 'COMING SOON'));
   }
-
-  if (item.vertical === 'mn') sec.appendChild(el('span', 'flourish', 'together'));
   return sec;
 }
 
 /* ================= navigation ================= */
-let pages = [];   // section elements; index 0 = hero (empty stage)
-let themes = [];  // 'night' | 'day' per page
+let pages = [];   // section elements; index 0 = hero (not counted, no arrows)
+let themes = [];
 let idx = 0;
 let locked = false;
 
@@ -178,29 +195,28 @@ function goTo(i) {
   idx = target;
 
   pages.forEach((p, k) => {
-    if (!p) return;
     p.classList.toggle('active', k === idx);
-    p.classList.toggle('above', k < idx);
+    p.classList.toggle('left', k < idx);
   });
   document.body.classList.toggle('off-hero', idx !== 0);
   themeTarget = themes[idx] === 'day' ? 1 : 0;
   document.body.toggleAttribute('data-day', themes[idx] === 'day');
   applyBrand();
-  counter.textContent = `${pad(idx + 1)} / ${pad(pages.length)}`;
-  prevBtn.disabled = idx === 0;
+  counter.textContent = idx === 0 ? '' : `${pad(idx)} / ${pad(pages.length - 1)}`;
+  prevBtn.disabled = idx <= 0;
   nextBtn.disabled = idx === pages.length - 1;
 }
 
 function wireInput() {
   prevBtn.addEventListener('click', () => goTo(idx - 1));
   nextBtn.addEventListener('click', () => goTo(idx + 1));
-  document.getElementById('navProjects').addEventListener('click', () => goTo(1));
 
   let acc = 0;
   window.addEventListener('wheel', (e) => {
     e.preventDefault();
     if (locked) { acc = 0; return; }
-    acc += e.deltaY;
+    const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    acc += d;
     if (acc > 60) { acc = 0; goTo(idx + 1); }
     else if (acc < -60) { acc = 0; goTo(idx - 1); }
   }, { passive: false });
@@ -213,13 +229,17 @@ function wireInput() {
     }
   });
 
-  let touchY = null;
-  window.addEventListener('touchstart', (e) => { touchY = e.touches[0].clientY; }, { passive: true });
+  let touch = null;
+  window.addEventListener('touchstart', (e) => {
+    touch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }, { passive: true });
   window.addEventListener('touchend', (e) => {
-    if (touchY == null) return;
-    const dy = touchY - e.changedTouches[0].clientY;
-    if (Math.abs(dy) > 46) goTo(idx + (dy > 0 ? 1 : -1));
-    touchY = null;
+    if (!touch) return;
+    const dx = touch.x - e.changedTouches[0].clientX;
+    const dy = touch.y - e.changedTouches[0].clientY;
+    const d = Math.abs(dx) > Math.abs(dy) ? dx : dy;
+    if (Math.abs(d) > 46) goTo(idx + (d > 0 ? 1 : -1));
+    touch = null;
   }, { passive: true });
 }
 
@@ -248,9 +268,6 @@ async function boot() {
   }
 
   hero.classList.add('active');
-  counter.textContent = `${pad(1)} / ${pad(pages.length)}`;
-  prevBtn.disabled = true;
-
   placeBrand();
   wireInput();
 

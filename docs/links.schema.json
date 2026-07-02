@@ -89,6 +89,10 @@
                     "soon",
                     "beta"
                   ]
+                },
+                "subtitle": {
+                  "type": "string",
+                  "description": "Optional script-face subtitle under the option label (e.g. 'Finance Tracker')"
                 }
               }
             }
