@@ -1,31 +1,95 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Saturday Services hub links",
+  "title": "Saturday Services hub pages",
+  "description": "Each entry in `links` is one full-viewport page on the hub, after the Saturday Services hero.",
   "type": "object",
-  "required": ["links"],
+  "required": [
+    "links"
+  ],
   "properties": {
-    "$schema": { "type": "string" },
+    "$schema": {
+      "type": "string"
+    },
     "links": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["title", "vertical", "logo", "link", "status"],
+        "required": [
+          "title",
+          "vertical",
+          "logo",
+          "link",
+          "status"
+        ],
         "properties": {
-          "title": { "type": "string", "minLength": 1 },
-          "vertical": { "type": "string", "description": "services | shakes | solutions | mn — unknown values fall back to services accent" },
-          "logo": { "type": "string" },
-          "link": { "type": ["string", "null"], "description": "null = coming soon" },
-          "status": { "enum": ["live", "soon", "beta"] },
-          "blurb": { "type": "string" },
-          "children": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Page header"
+          },
+          "vertical": {
+            "type": "string",
+            "description": "services | shakes | solutions | mn — controls accent + glow color; unknown values fall back to services"
+          },
+          "theme": {
+            "enum": [
+              "day",
+              "night"
+            ],
+            "description": "day = light daytime inversion (M&N). Default night."
+          },
+          "logo": {
+            "type": "string",
+            "description": "Page mark, shown below the header with an accent glow. Clickable when `link` is set and status is live."
+          },
+          "link": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Direct app URL for single-app pages; null when the page has options or is coming soon"
+          },
+          "status": {
+            "enum": [
+              "live",
+              "soon",
+              "beta"
+            ]
+          },
+          "blurb": {
+            "type": "string"
+          },
+          "options": {
             "type": "array",
+            "description": "Sub-apps shown as clickable glowing marks (e.g. Backbar + Flavour Studio; future game sub-logos)",
             "items": {
               "type": "object",
-              "required": ["title", "link", "status"],
+              "required": [
+                "title",
+                "logo",
+                "link",
+                "status"
+              ],
               "properties": {
-                "title": { "type": "string" },
-                "link": { "type": ["string", "null"] },
-                "status": { "enum": ["live", "soon", "beta"] }
+                "title": {
+                  "type": "string"
+                },
+                "logo": {
+                  "type": "string"
+                },
+                "link": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "status": {
+                  "enum": [
+                    "live",
+                    "soon",
+                    "beta"
+                  ]
+                }
               }
             }
           }

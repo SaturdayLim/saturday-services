@@ -5,37 +5,54 @@
       "title": "Saturday Shakes",
       "vertical": "shakes",
       "logo": "assets/logos/shakes.svg",
-      "link": "https://saturdayshakes.vercel.app/",
+      "link": null,
       "status": "live",
-      "blurb": "Bar app — recipes, technique, and the house pour."
+      "blurb": "The bar vertical.",
+      "options": [
+        {
+          "title": "Backbar",
+          "logo": "assets/logos/options/shakes-a.svg",
+          "link": "https://saturdayshakes.vercel.app/",
+          "status": "live"
+        },
+        {
+          "title": "Flavour Studio",
+          "logo": "assets/logos/options/shakes-c.svg",
+          "link": "https://the-lab-pearl-tau.vercel.app/app.html",
+          "status": "live"
+        }
+      ]
     },
     {
-      "title": "Flavour Lab",
-      "vertical": "shakes",
-      "logo": "assets/logos/options/shakes-c.svg",
-      "link": "https://the-lab-pearl-tau.vercel.app/app.html",
-      "status": "live",
-      "blurb": "Flavour-mixing lab — pair, balance, invent."
-    },
-    {
-      "title": "Saturday Night Games",
+      "title": "Saturday Solutions",
       "vertical": "solutions",
-      "logo": "assets/logos/solutions.svg",
+      "logo": "assets/logos/solutions-light.svg",
       "link": null,
       "status": "soon",
-      "blurb": "Game hub — trivia nights, board games, and party formats."
+      "blurb": "Games in the works — each will land here with its own mark.",
+      "options": []
     },
     {
       "title": "M&N Collective",
       "vertical": "mn",
+      "theme": "day",
       "logo": "assets/logos/mn-monogram.png",
       "link": null,
       "status": "live",
       "blurb": "Two people building a life together in software.",
-      "children": [
-        { "title": "Just-Do-Fin", "link": "https://just-do-fin.vercel.app/", "status": "live" },
-        { "title": "Just Do I Do", "link": "https://mn-wedding.saturdayservices.workers.dev/", "status": "live" },
-        { "title": "Just Write It Down", "link": null, "status": "soon" }
+      "options": [
+        {
+          "title": "Just Do Fin",
+          "logo": "assets/logos/mn-dollar.svg",
+          "link": "https://just-do-fin.vercel.app/",
+          "status": "live"
+        },
+        {
+          "title": "Just Do I Do",
+          "logo": "assets/logos/mn-rings.svg",
+          "link": "https://mn-wedding.saturdayservices.workers.dev/",
+          "status": "live"
+        }
       ]
     }
   ]

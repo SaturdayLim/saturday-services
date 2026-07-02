@@ -1,25 +1,33 @@
-# Adding a link to the hub
+# Adding to the hub
 
-1. Open `links.json`.
-2. Add an object to the `links` array:
+Each entry in `links.json` is one full-viewport **page** (after the hero). Edit, commit, push — Vercel redeploys in ~30s.
+
+## Add a whole new page (vertical / collective)
 
 ```json
 {
-  "title": "My New App",
-  "vertical": "shakes",
-  "logo": "assets/logos/shakes.svg",
-  "link": "https://my-new-app.vercel.app/",
-  "status": "live",
-  "blurb": "One line about what it does."
+  "title": "Saturday Something",
+  "vertical": "solutions",
+  "logo": "assets/logos/solutions-light.svg",
+  "link": null,
+  "status": "soon",
+  "blurb": "One line about it.",
+  "options": []
 }
 ```
 
-3. Commit and push to `main`. Vercel redeploys automatically (~30s).
+## Add an app to an existing page (a sub-logo option)
+
+Add one object to that page's `options` array — this is how each future game lands under Saturday Solutions:
+
+```json
+{ "title": "Trivia", "logo": "assets/logos/trivia.svg", "link": "https://trivia.example.app/", "status": "live" }
+```
 
 Field notes:
 
-- `vertical`: `services` · `shakes` · `solutions` · `mn` — controls the accent color. Unknown values fall back to the Services blue, so new verticals never break the page.
-- `link`: use `null` while the app isn't live yet — the panel shows COMING SOON.
-- `status`: `live` or `soon` — controls the badge.
-- `children`: optional array of `{title, link, status}` — renders the entry as a group panel (see the M&N Collective entry).
+- `vertical`: `services` · `shakes` · `solutions` · `mn` — sets the accent + glow color. Unknown values fall back to services blue.
+- `theme`: `"day"` flips that page to the light daytime inversion (used by M&N Collective). Omit for night.
+- `link` on the page itself: only for single-app pages — the big logo becomes clickable. Use `null` when the page has `options`.
+- Option logos: SVGs are inlined at runtime, so glows and embedded images work. Clicking a logo opens the app in a new tab.
 - Schema: `docs/links.schema.json`.

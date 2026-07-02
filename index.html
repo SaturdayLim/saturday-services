@@ -14,44 +14,28 @@
 </head>
 <body>
 
-<header class="chrome">
-  <div class="wordmark">SATURDAY<span>SERVICES</span></div>
-  <nav class="pillnav" aria-label="Site">
-    <a href="#deck">PROJECTS</a>
-    <span class="rule" aria-hidden="true"></span>
-    <a href="logo-gallery.html">GALLERY</a>
-  </nav>
-</header>
+<canvas id="space" aria-hidden="true"></canvas>
 
-<main>
-  <section id="hero" aria-label="Saturday Services">
-    <div id="stage">
-      <img id="poster" src="assets/posters/services-poster.svg" alt="Saturday Services mark" width="420" height="420">
-    </div>
-    <p class="tagline">Every day is Saturday</p>
-    <a class="scrollhint" href="#deck" aria-label="Scroll to projects">ENTER <span aria-hidden="true">↓</span></a>
-  </section>
+<div id="brand" aria-label="Saturday Services"><span class="metal">SATURDAY&nbsp;SERVICES</span></div>
+<p id="tagline" class="tagline">Every day is Saturday</p>
+<div id="hint" aria-hidden="true">SCROLL <span>↓</span></div>
 
-  <section id="deck" aria-label="Projects">
-    <div class="deck-track" id="deckTrack" tabindex="0"></div>
-    <div class="deck-ui">
-      <button id="prev" class="deck-btn" aria-label="Previous project"><span aria-hidden="true">←</span></button>
-      <span id="counter" class="deck-counter">— / —</span>
-      <button id="next" class="deck-btn" aria-label="Next project"><span aria-hidden="true">→</span></button>
-    </div>
-  </section>
-</main>
+<nav class="pillnav" aria-label="Site">
+  <button id="navProjects" type="button">PROJECTS</button>
+  <span class="rule" aria-hidden="true"></span>
+  <a href="logo-gallery.html">GALLERY</a>
+</nav>
+
+<main id="pages" aria-live="polite"></main>
+
+<div class="deck-ui">
+  <button id="prev" class="deck-btn" aria-label="Previous page"><span aria-hidden="true">↑</span></button>
+  <span id="counter" class="deck-counter">— / —</span>
+  <button id="next" class="deck-btn" aria-label="Next page"><span aria-hidden="true">↓</span></button>
+</div>
 
 <footer class="micro">SATURDAY SERVICES — PERSONAL PROJECT HUB</footer>
 
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-  }
-}
-</script>
 <script type="module" src="js/main.js"></script>
 </body>
 </html>

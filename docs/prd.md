@@ -123,6 +123,15 @@ Each vertical Design.md includes an **Agent Prompt Guide** section (quick color/
 
 ## 6. Deliverable C — Landing page
 
+> **Revision 2026-07-02 (post-launch, per Michael):** the 3D extruded hero was replaced by a
+> centered metallic SATURDAY SERVICES wordmark (animated light sweep) that glides to the top-left
+> corner on page change; one continuous starfield background across all pages; vertical
+> scroll/arrow/Enter page-snapping with smooth transitions; ENTER buttons removed — logos are
+> clickable (new tab) and carry accent glows; Shakes page = Backbar + Flavour Studio options;
+> Solutions page headed "Saturday Solutions" with light hex mark; M&N page inverts to a daytime
+> starfield with line-drawn Just Do Fin (bill) + Just Do I Do (rings) marks and a back-to-night
+> control. The 3D pipeline (docs/3d-pipeline.md, js/scene.js) is retained for future use.
+
 **Stack:** static `index.html` + CSS + vanilla JS, Three.js via CDN (pinned version, ES modules). No build step.
 
 ### 6.1 Structure & behavior
@@ -221,14 +230,4 @@ Fable plans, reviews, and integrates; subagents execute parallel tracks.
 - [ ] 9 logo option SVGs render correctly in `logo-gallery.html`, incl. Solutions mono at 15mm-equivalent.
 - [ ] All 4 design-suite folders complete, format-matched to the ActiveTheory kit.
 - [ ] Hub renders 3D centerpiece on desktop Chrome/Firefox/Safari; poster fallback on reduced-motion/no-WebGL.
-- [ ] Deck shows all 4 day-one panels; M&N panel uses its canonical light styling; all live links resolve (200).
-- [ ] Adding a test entry to `links.json` produces a new panel with zero other changes.
-- [ ] `noindex` present in meta + response headers.
-- [ ] Live on `saturday-services.vercel.app` via auto-deploy from a fresh-history main.
-
-## 12. Open questions (answer at sign-off)
-
-1. **Solutions ↔ Night Games:** confirm one shared mark with two lockups (recommended), vs. two separate marks.
-2. **M&N hub panel:** confirm the light "alabaster plate" treatment (recommended), vs. dark-styled like the Saturday panels.
-3. **Font kit:** RESOLVED — Space Grotesk + Elms Sans + Inter + Instrument Serif (Saturday); Playfair Display + Lato (M&N).
-4. **PAT:** RESOLVED — token provided 2026-07-02 (classic, broad scope). **Revoke immediately after deploy.**
+- [ ] Deck shows all 4 day-one panels; M&N panel uses its canonical light styling; all live links resolve (200)

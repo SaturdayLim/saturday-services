@@ -1,0 +1,14 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Just Do Fin — M&amp;N on a dollar bill">
+  <g fill="none" stroke="#1A1A1A" stroke-width="5">
+    <rect x="36" y="162" width="440" height="188" rx="10"/>
+    <rect x="52" y="178" width="408" height="156" rx="6" stroke-width="2.5"/>
+    <ellipse cx="256" cy="256" rx="76" ry="66"/>
+    <circle cx="84" cy="210" r="13" stroke-width="3"/>
+    <circle cx="428" cy="210" r="13" stroke-width="3"/>
+    <circle cx="84" cy="302" r="13" stroke-width="3"/>
+    <circle cx="428" cy="302" r="13" stroke-width="3"/>
+    <path d="M108 244 h44 M108 256 h44 M108 268 h44" stroke-width="2.5"/>
+    <path d="M360 244 h44 M360 256 h44 M360 268 h44" stroke-width="2.5"/>
+  </g>
+  <image href="assets/logos/mn-monogram.png" xlink:href="assets/logos/mn-monogram.png" x="204" y="204" width="104" height="104"/>
+</svg>

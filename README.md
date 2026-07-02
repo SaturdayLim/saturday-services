@@ -5,9 +5,17 @@ Live at **saturday-services.vercel.app** — static site, no build step, auto-de
 
 *Every day is Saturday.*
 
-## Add a link
+## How it works
 
-Edit `links.json`, add one object, commit, push. Vercel redeploys in ~30s. See `docs/adding-links.md`.
+The hero is the metallic **SATURDAY SERVICES** wordmark on a continuous starfield; scrolling,
+arrow keys, or Enter snap between full-viewport pages (one per `links.json` entry). The wordmark
+glides to the top-left corner when you leave the hero. Clicking any glowing logo opens its app
+in a new tab. The M&N Collective page inverts to daytime.
+
+## Add a page or an app
+
+Edit `links.json`, commit, push. Vercel redeploys in ~30s. Pages have `options` (sub-apps with
+their own marks — how future games land under Saturday Solutions). See `docs/adding-links.md`.
 
 ## Swap a logo
 
@@ -19,17 +27,15 @@ cp assets/logos/options/services-b.svg      assets/logos/services.svg
 cp assets/logos/options/services-b-mono.svg assets/logos/services-mono.svg
 ```
 
-The 3D hero extrudes `assets/logos/services-mono.svg` — swap that file and the sculpture changes with it.
-
 ## Structure
 
 ```
-index.html            the hub (hero + swipeable project deck)
+index.html            the hub (starfield + page-snap navigation)
 logo-gallery.html     logo option picker
-links.json            THE file you edit to add projects
-css/ js/              site + Three.js scene
+links.json            THE file you edit to add pages/apps
+css/ js/              site (main.js: starfield, pages, transitions)
+js/scene.js           unused reference implementation for the 3D pipeline
 assets/logos/         final marks (+ options/ = 3 explorations per mark)
-assets/posters/       static fallback for reduced-motion / no-WebGL
 design/               transferrable design suites (saturday-core + verticals)
 docs/                 prd, 3d pipeline recipe, adding-links how-to
 ```
