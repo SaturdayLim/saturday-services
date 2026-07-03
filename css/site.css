@@ -51,6 +51,7 @@ body[data-day] { background: var(--day-canvas); }
   white-space: nowrap; cursor: default;
 }
 #brand.placed { visibility: visible; }
+body.off-hero #brand { cursor: pointer; }
 #brand.no-anim { transition: none; }
 #brand .metal {
   font-family: var(--font-display); font-weight: 700;
@@ -101,7 +102,11 @@ body.off-hero .tagline { opacity: 0; }
   --glow: rgba(0, 240, 255, 0.30);
   --glow-soft: rgba(0, 240, 255, 0.14);
 }
-.page.left { transform: translateX(-64vw); }
+.page.off-left { transform: translateX(-64vw); }
+.page.off-right { transform: translateX(64vw); }
+.page.off-up { transform: translateY(-58vh); }
+.page.off-down { transform: translateY(58vh); }
+.page.no-anim { transition: none; }
 .page.active { opacity: 1; transform: none; pointer-events: auto; }
 
 .page[data-vertical="shakes"] {
@@ -182,18 +187,6 @@ a.page-logo:hover svg, a.page-logo:hover img { transform: scale(1.04); }
 }
 .option--soon { opacity: 0.55; pointer-events: none; }
 
-/* ---------- M&N extras ---------- */
-.night-return {
-  position: absolute; top: 96px; right: clamp(20px, 5vw, 60px);
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: 'Lato', sans-serif; font-size: 11px; font-weight: 700;
-  letter-spacing: 0.14em; color: var(--day-muted);
-  background: none; border: 1px solid var(--day-hairline); border-radius: 500px;
-  padding: 8px 18px; cursor: pointer;
-  transition: color 300ms ease, border-color 300ms ease;
-}
-.night-return:hover { color: var(--mn-forest); border-color: var(--mn-forest); }
-
 /* ---------- nav ui: hidden on the hero ---------- */
 .deck-ui {
   position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
@@ -225,7 +218,6 @@ body[data-day] .deck-btn:hover { border-color: var(--mn-forest); color: var(--mn
 @media (max-width: 680px) {
   #brand { top: 20px; left: 18px; }
   .micro { display: none; }
-  .night-return { top: 78px; }
   .page { gap: 16px; padding: 84px 18px 110px; }
 }
 @media (prefers-reduced-motion: reduce) {

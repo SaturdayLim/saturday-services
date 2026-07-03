@@ -1,5 +1,7 @@
-/* Saturday Services hub — rotating starfield (night) / falling snow (day),
-   sidescrolling page snapping. Pages come from links.json; the hero is not counted. */
+/* Saturday Services hub — rotating starfield (night) / grey snow (day).
+   Model: the title page sits ABOVE a wrapping horizontal carousel of project pages.
+   Down enters the carousel (and then advances right, wrapping); left/right cycle with
+   wraparound; only up returns to the title page. */
 
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const pagesEl = document.getElementById('pages');
@@ -9,7 +11,7 @@ const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 const pad = (n) => String(n).padStart(2, '0');
 
-/* ================= space: rotating stars at night, grey snow by day ================= */
+/* ================= space background ================= */
 const NIGHT_BG = [11, 12, 16];
 const DAY_BG = [253, 251, 247];
 const NIGHT_STAR = [240, 243, 244];
@@ -18,19 +20,19 @@ const SNOW_GREY = [148, 152, 157];
 const space = document.getElementById('space');
 const ctx = space.getContext('2d');
 let stars = [];
-let themeT = 0;        // 0 = night, 1 = day
+let themeT = 0;
 let themeTarget = 0;
-let rot = 0;           // global rotation of the night field
-let fallClock = 0;     // global snow clock
+let rot = 0;
+let fallClock = 0;
 
 function seedStars() {
   const n = Math.round((window.innerWidth * window.innerHeight) / 11000);
   stars = Array.from({ length: Math.min(Math.max(n, 90), 240) }, () => ({
-    ang: Math.random() * Math.PI * 2,          // night: polar position
+    ang: Math.random() * Math.PI * 2,
     rad: Math.sqrt(Math.random()),
-    fx: Math.random(),                          // day: snow column + start
+    fx: Math.random(),
     fy: Math.random(),
-    speed: 0.035 + Math.random() * 0.055,       // snow fall, screens/sec
+    speed: 0.035 + Math.random() * 0.055,
     r: 0.5 + Math.random() * 1.4,
     phase: Math.random() * Math.PI * 2,
     tw: 0.4 + Math.random() * 0.8,
@@ -50,10 +52,7 @@ function drawSpace(now) {
   const dt = Math.min((now - last) / 1000, 0.05);
   last = now;
   themeT += (themeTarget - themeT) * Math.min(dt * 3.2, 1);
-  if (!reduced) {
-    rot += dt * 0.016;          // slow rotation of the whole night sky
-    fallClock += dt;
-  }
+  if (!reduced) { rot += dt * 0.016; fallClock += dt; }
 
   const w = window.innerWidth, h = window.innerHeight;
   const cx = w / 2, cy = h / 2;
@@ -65,19 +64,13 @@ function drawSpace(now) {
   const [sr, sg, sb] = mix(NIGHT_STAR, SNOW_GREY, themeT);
   for (const s of stars) {
     if (!reduced) s.phase += dt * s.tw * (1 - 0.6 * themeT);
-
-    // night position: rotating around screen center
     const a = s.ang + rot;
     const nx = cx + Math.cos(a) * s.rad * maxR;
     const ny = cy + Math.sin(a) * s.rad * maxR;
-
-    // day position: falling like snow with a gentle sway
-    const dx = (s.fx + 0.018 * Math.sin(fallClock * 0.7 + s.phase)) * w;
-    const dy = (((s.fy + fallClock * s.speed) % 1.06) - 0.03) * h;
-
-    const x = lerp(nx, dx, themeT);
-    const y = lerp(ny, dy, themeT);
-
+    const dxp = (s.fx + 0.018 * Math.sin(fallClock * 0.7 + s.phase)) * w;
+    const dyp = (((s.fy + fallClock * s.speed) % 1.06) - 0.03) * h;
+    const x = lerp(nx, dxp, themeT);
+    const y = lerp(ny, dyp, themeT);
     const twinkle = 0.5 + 0.5 * Math.sin(s.phase);
     const alpha = lerp(0.30 + 0.55 * twinkle, 0.55 + 0.2 * twinkle, themeT);
     ctx.fillStyle = `rgba(${sr},${sg},${sb},${alpha.toFixed(3)})`;
@@ -88,7 +81,7 @@ function drawSpace(now) {
   requestAnimationFrame(drawSpace);
 }
 
-/* ================= inline SVG loader (enables glow + embedded images) ================= */
+/* ================= inline SVG loader ================= */
 const svgCache = new Map();
 async function logoNode(src, alt) {
   if (src.endsWith('.svg')) {
@@ -135,17 +128,9 @@ async function buildOption(opt) {
   return a;
 }
 
-async function buildPage(item, idx) {
-  const sec = el('section', 'page');
+async function buildPage(item) {
+  const sec = el('section', 'page off-right');
   sec.dataset.vertical = item.vertical || 'services';
-
-  if (item.vertical === 'mn') {
-    const back = el('button', 'night-return');
-    back.type = 'button';
-    back.innerHTML = '<span aria-hidden="true">←</span> BACK TO NIGHT';
-    back.addEventListener('click', () => goTo(idx - 1));
-    sec.appendChild(back);
-  }
 
   sec.appendChild(el('h2', 'page-title', item.title));
 
@@ -167,11 +152,13 @@ async function buildPage(item, idx) {
   return sec;
 }
 
-/* ================= navigation ================= */
-let pages = [];   // section elements; index 0 = hero (not counted, no arrows)
-let themes = [];
-let idx = 0;
+/* ================= navigation: home floor + wrapping carousel ================= */
+let heroEl = null;
+let pages = [];    // carousel pages only
+let themes = [];   // theme per carousel page
+let view = -1;     // -1 = home, else carousel index
 let locked = false;
+const N = () => pages.length;
 
 function placeBrand() {
   brand.classList.add('no-anim');
@@ -187,49 +174,94 @@ function placeBrand() {
   requestAnimationFrame(() => requestAnimationFrame(() => brand.classList.remove('no-anim')));
 }
 function applyBrand() {
-  brand.style.transform = idx === 0 ? brand.dataset.hero : 'none';
+  brand.style.transform = view === -1 ? brand.dataset.hero : 'none';
 }
 
-function goTo(i) {
-  const target = Math.max(0, Math.min(pages.length - 1, i));
-  if (target === idx || locked) return;
-  locked = true;
-  setTimeout(() => { locked = false; }, 820);
-  idx = target;
-
-  pages.forEach((p, k) => {
-    p.classList.toggle('active', k === idx);
-    p.classList.toggle('left', k < idx);
+function setOff(elm, cls) {
+  elm.classList.remove('active', 'off-left', 'off-right', 'off-up', 'off-down');
+  if (cls) elm.classList.add(cls);
+}
+function snapTo(elm, cls) {
+  elm.classList.add('no-anim');
+  setOff(elm, cls);
+  void elm.offsetWidth;
+  elm.classList.remove('no-anim');
+}
+function activate(elm) {
+  requestAnimationFrame(() => {
+    elm.classList.remove('off-left', 'off-right', 'off-up', 'off-down');
+    elm.classList.add('active');
   });
-  document.body.classList.toggle('off-hero', idx !== 0);
-  themeTarget = themes[idx] === 'day' ? 1 : 0;
-  document.body.toggleAttribute('data-day', themes[idx] === 'day');
-  applyBrand();
-  counter.textContent = idx === 0 ? '' : `${pad(idx)} / ${pad(pages.length - 1)}`;
-  prevBtn.disabled = idx <= 0;
-  nextBtn.disabled = idx === pages.length - 1;
 }
+function lock() { locked = true; setTimeout(() => { locked = false; }, 820); }
+
+function updateChrome() {
+  const home = view === -1;
+  document.body.classList.toggle('off-hero', !home);
+  const theme = home ? 'night' : themes[view];
+  themeTarget = theme === 'day' ? 1 : 0;
+  document.body.toggleAttribute('data-day', theme === 'day');
+  applyBrand();
+  counter.textContent = home ? '' : `${pad(view + 1)} / ${pad(N())}`;
+}
+
+function enterCarousel() {
+  if (locked || view !== -1 || !N()) return;
+  lock();
+  setOff(heroEl, 'off-up');            // title floor lifts away
+  snapTo(pages[0], 'off-down');        // Shakes rises from below
+  activate(pages[0]);
+  view = 0;
+  updateChrome();
+}
+function goHome() {
+  if (locked || view === -1) return;
+  lock();
+  setOff(pages[view], 'off-down');     // current page sinks
+  snapTo(heroEl, 'off-up');
+  activate(heroEl);                    // title floor descends back in
+  view = -1;
+  updateChrome();
+}
+function cycle(dir) {                  // +1 right, -1 left; wraps around
+  if (locked) return;
+  if (view === -1) { if (dir === 1) enterCarousel(); return; }
+  if (N() < 2) return;
+  lock();
+  const nextIdx = (view + dir + N()) % N();
+  setOff(pages[view], dir === 1 ? 'off-left' : 'off-right');
+  snapTo(pages[nextIdx], dir === 1 ? 'off-right' : 'off-left');
+  activate(pages[nextIdx]);
+  view = nextIdx;
+  updateChrome();
+}
+const goDown = () => (view === -1 ? enterCarousel() : cycle(1));
+const goUp = () => { if (view !== -1) goHome(); };
 
 function wireInput() {
-  prevBtn.addEventListener('click', () => goTo(idx - 1));
-  nextBtn.addEventListener('click', () => goTo(idx + 1));
+  prevBtn.addEventListener('click', () => cycle(-1));
+  nextBtn.addEventListener('click', () => cycle(1));
+  brand.addEventListener('click', () => goUp());
 
   let acc = 0;
   window.addEventListener('wheel', (e) => {
     e.preventDefault();
     if (locked) { acc = 0; return; }
-    const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-    acc += d;
-    if (acc > 60) { acc = 0; goTo(idx + 1); }
-    else if (acc < -60) { acc = 0; goTo(idx - 1); }
+    const horizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+    acc += horizontal ? e.deltaX : e.deltaY;
+    if (Math.abs(acc) > 60) {
+      const fwd = acc > 0;
+      acc = 0;
+      if (horizontal) cycle(fwd ? 1 : -1);
+      else fwd ? goDown() : goUp();
+    }
   }, { passive: false });
 
   window.addEventListener('keydown', (e) => {
-    if (['ArrowDown', 'ArrowRight', 'PageDown', 'Enter', ' '].includes(e.key)) {
-      e.preventDefault(); goTo(idx + 1);
-    } else if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.key)) {
-      e.preventDefault(); goTo(idx - 1);
-    }
+    if (e.key === 'ArrowRight') { e.preventDefault(); cycle(1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); cycle(-1); }
+    else if (['ArrowDown', 'PageDown', 'Enter', ' '].includes(e.key)) { e.preventDefault(); goDown(); }
+    else if (['ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); goUp(); }
   });
 
   let touch = null;
@@ -240,8 +272,11 @@ function wireInput() {
     if (!touch) return;
     const dx = touch.x - e.changedTouches[0].clientX;
     const dy = touch.y - e.changedTouches[0].clientY;
-    const d = Math.abs(dx) > Math.abs(dy) ? dx : dy;
-    if (Math.abs(d) > 46) goTo(idx + (d > 0 ? 1 : -1));
+    if (Math.abs(dx) > Math.abs(dy)) {
+      if (Math.abs(dx) > 46) cycle(dx > 0 ? 1 : -1);
+    } else if (Math.abs(dy) > 46) {
+      dy > 0 ? goDown() : goUp();
+    }
     touch = null;
   }, { passive: true });
 }
@@ -258,21 +293,18 @@ async function boot() {
     data = await (await fetch('links.json')).json();
   } catch (e) { /* hero still works */ }
 
-  const hero = el('section', 'page');
-  hero.dataset.vertical = 'services';
-  pagesEl.appendChild(hero);
-  pages = [hero];
-  themes = ['night'];
+  heroEl = el('section', 'page active');
+  heroEl.dataset.vertical = 'services';
+  pagesEl.appendChild(heroEl);
 
-  for (const [i, item] of (data.links || []).entries()) {
-    const sec = await buildPage(item, i + 1);
+  for (const item of (data.links || [])) {
+    const sec = await buildPage(item);
     pagesEl.appendChild(sec);
     pages.push(sec);
     themes.push(item.theme === 'day' ? 'day' : 'night');
   }
 
-  hero.classList.add('active');
-  placeBrand();
+  updateChrome();
   wireInput();
 
   window.addEventListener('resize', () => { resizeSpace(); seedStars(); placeBrand(); });
