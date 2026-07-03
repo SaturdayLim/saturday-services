@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="TapTap — four choices, one locked in">
+  <rect x="70"  y="70"  width="176" height="176" rx="30" fill="#F0F3F4"/>
+  <rect x="266" y="70"  width="176" height="176" rx="30" fill="#FFE600"/>
+  <rect x="70"  y="266" width="176" height="176" rx="30" fill="#F0F3F4"/>
+  <rect x="266" y="266" width="176" height="176" rx="30" fill="#F0F3F4"/>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Just Pose — a couple in formal wear">
+  <g fill="none" stroke="#1A1A1A" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Figure in a suit (left) -->
+    <circle cx="196" cy="132" r="32"/>
+    <path d="M188 164 L188 174 M204 164 L204 174"/>
+    <path d="M156 206 C156 184 172 172 196 172 C220 172 236 184 236 206 L230 312 L214 440 L196 440 L198 330 L182 440 L164 440 L162 312 Z"/>
+    <path d="M196 172 L184 208 M196 172 L208 208 M196 208 L196 312"/>
+    <!-- Figure in a gown (right) -->
+    <circle cx="322" cy="132" r="32"/>
+    <path d="M316 164 L316 174 M330 164 L330 174"/>
+    <path d="M296 206 C296 186 308 174 322 174 C336 174 348 186 348 206 L338 270 L394 438 Q322 456 250 438 L306 270 Z"/>
+    <path d="M306 270 L338 270"/>
+  </g>
+</svg>

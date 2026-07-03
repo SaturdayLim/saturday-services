@@ -29,9 +29,17 @@
       "vertical": "solutions",
       "logo": "assets/logos/solutions-light.svg",
       "link": null,
-      "status": "soon",
+      "status": "live",
       "blurb": "Games in the works — each will land here with its own mark.",
-      "options": []
+      "options": [
+        {
+          "title": "TapTap",
+          "subtitle": "4-choice Lockin",
+          "logo": "assets/logos/options/solutions-taptap.svg",
+          "link": "https://tap4mike.replit.app/",
+          "status": "live"
+        }
+      ]
     },
     {
       "title": "M&N Collective",
@@ -53,6 +61,13 @@
           "subtitle": "Wedding Media",
           "logo": "assets/logos/mn-rings.svg",
           "link": "https://mn-wedding.saturdayservices.workers.dev/",
+          "status": "live"
+        },
+        {
+          "title": "Just Pose",
+          "subtitle": "Group Posing Inspo",
+          "logo": "assets/logos/mn-pose.svg",
+          "link": "https://jdi26poses.replit.app/index.html",
           "status": "live"
         }
       ]
