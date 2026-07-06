@@ -40,8 +40,8 @@
           "status": "live"
         },
         {
-          "title": "Vaela Wiki",
-          "subtitle": "D&D Compendium",
+          "title": "Vaela Compendium",
+          "subtitle": "DnD Wiki",
           "logo": "assets/logos/options/solutions-vaela.svg",
           "link": "https://vaela-wiki.vercel.app/",
           "status": "live"

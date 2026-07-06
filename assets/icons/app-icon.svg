@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Saturday Services">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="60%">
+      <stop offset="0" stop-color="#0E2B31"/>
+      <stop offset="0.55" stop-color="#0B0C10"/>
+      <stop offset="1" stop-color="#070709"/>
+    </radialGradient>
+    <linearGradient id="seam" x1="256" y1="224" x2="256" y2="288" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00F0FF" stop-opacity="0.55"/>
+      <stop offset="0.5" stop-color="#00F0FF"/>
+      <stop offset="1" stop-color="#00F0FF" stop-opacity="0.55"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <g transform="translate(256 256) scale(0.74) translate(-256 -260)">
+    <!-- Meridian S: two interlocking half-rings -->
+    <path fill="#C0C0C0" d="M 272.07 179.85 L 297.89 117.97 A 89 89 0 1 0 256 288 L 256 224 A 25 25 0 1 1 272.07 179.85 Z"/>
+    <path fill="#F0F3F4" d="M 256 224 A 93 93 0 1 1 211.54 401.10 L 237.36 339.22 A 29 29 0 1 0 256 288 Z"/>
+    <path fill="url(#seam)" d="M 244 224 L 268 224 L 268 288 L 244 288 Z"/>
+  </g>
+</svg>
