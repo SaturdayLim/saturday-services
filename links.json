@@ -38,6 +38,13 @@
           "logo": "assets/logos/options/solutions-taptap.svg",
           "link": "https://tap4mike.replit.app/",
           "status": "live"
+        },
+        {
+          "title": "Vaela Wiki",
+          "subtitle": "D&D Compendium",
+          "logo": "assets/logos/options/solutions-vaela.svg",
+          "link": "https://vaela-wiki.vercel.app/",
+          "status": "live"
         }
       ]
     },
