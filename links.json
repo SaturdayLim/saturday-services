@@ -45,6 +45,13 @@
           "logo": "assets/logos/options/solutions-vaela.svg",
           "link": "https://vaela-wiki.vercel.app/",
           "status": "live"
+        },
+        {
+          "title": "Virtual Deck",
+          "subtitle": "Cards & Games",
+          "logo": "assets/logos/options/solutions-vdeck.svg",
+          "link": "https://v-deck.vercel.app/",
+          "status": "live"
         }
       ]
     },

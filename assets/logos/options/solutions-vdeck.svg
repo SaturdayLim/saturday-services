@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Virtual Deck — the five of spades, its rank drawn as an S">
+  <defs>
+    <!-- spade, normalized to a 0..100 box, tip at top -->
+    <path id="vd-spade" d="M50 6C38 28 10 42 10 64c0 15 12 24 24 20c9-3 12-9 12-16c-1 15-6 22-16 28h40c-10-6-15-13-16-28c0 7 3 13 12 16c12 4 24-5 24-20C90 42 62 28 50 6Z"/>
+    <!-- S / 5 ambiguous glyph, 0..100 box: top bar, left riser, mid bar, right riser, bottom bar -->
+    <path id="vd-sfive" d="M8 8H92V32H8Z M8 8H32V52H8Z M8 38H92V62H8Z M68 48H92V92H68Z M8 68H92V92H8Z"/>
+  </defs>
+
+  <!-- card face -->
+  <rect x="100" y="44" width="312" height="424" rx="26" fill="#F4F6F7"/>
+
+  <!-- five spade pips (quincunx); bottom row inverted -->
+  <g fill="#0B0C10">
+    <use href="#vd-spade" transform="translate(170 110) scale(0.60)"/>
+    <use href="#vd-spade" transform="translate(282 110) scale(0.60)"/>
+    <use href="#vd-spade" transform="translate(226 206) scale(0.60)"/>
+    <g transform="rotate(180 230 332)">
+      <use href="#vd-spade" transform="translate(200 302) scale(0.60)"/>
+    </g>
+    <g transform="rotate(180 342 332)">
+      <use href="#vd-spade" transform="translate(312 302) scale(0.60)"/>
+    </g>
+  </g>
+
+  <!-- corner index: top-left -->
+  <g>
+    <use href="#vd-sfive" transform="translate(120 62) scale(0.42)" fill="#FFE600"/>
+    <use href="#vd-spade" transform="translate(126 112) scale(0.26)" fill="#0B0C10"/>
+  </g>
+
+  <!-- corner index: bottom-right (rotated 180) -->
+  <g transform="rotate(180 256 256)">
+    <use href="#vd-sfive" transform="translate(120 62) scale(0.42)" fill="#FFE600"/>
+    <use href="#vd-spade" transform="translate(126 112) scale(0.26)" fill="#0B0C10"/>
+  </g>
+</svg>
