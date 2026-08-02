@@ -3,7 +3,10 @@
    Down enters the carousel (and then advances right, wrapping); left/right cycle with
    wraparound; only up returns to the title page. */
 
+import { initMeteors } from './meteors.js';
+
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+initMeteors(document.getElementById('meteors'), 20);
 const pagesEl = document.getElementById('pages');
 const brand = document.getElementById('brand');
 const counter = document.getElementById('counter');
