@@ -27,6 +27,108 @@
   function apps(h) { return h.options || []; }
   function isLive(o) { return o.status === 'live' && !!o.link; }
 
+  /* ---------- Status dots ----------
+     A no-cors request cannot read the reply, only whether one arrived.
+     Answer = up. Network failure = down. No answer within TIMEOUT = slow (Replit apps wake slowly).
+     Results are cached in sessionStorage for CACHE_MS so moving between houses does not re-check. */
+  var TIMEOUT = 8000, CACHE_MS = 5 * 60 * 1000, CACHE_KEY = 'hub-status';
+  var LABEL = { checking: 'Checking', up: 'Up', down: 'Down', slow: 'Slow' };
+  var status = {};
+  var checkedAt = 0;
+
+  function loadCache() {
+    try {
+      var c = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null');
+      if (c && Date.now() - c.t < CACHE_MS) { status = c.s || {}; checkedAt = c.t; return true; }
+    } catch (e) {}
+    return false;
+  }
+  function saveCache() {
+    try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ t: checkedAt, s: status })); } catch (e) {}
+  }
+
+  function probe(url) {
+    var timer;
+    var slow = new Promise(function (r) { timer = setTimeout(function () { r('slow'); }, TIMEOUT); });
+    var hit = fetch(url, { mode: 'no-cors', cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer' })
+      .then(function () { return 'up'; }, function () { return 'down'; });
+    return Promise.race([hit, slow]).then(function (s) { clearTimeout(timer); return s; });
+  }
+
+  function statusHTML(link) {
+    var s = status[link] || 'checking';
+    return '<span class="hub-status" data-status="' + s + '" data-link="' + esc(link) + '"><span class="hub-dot" aria-hidden="true"></span>' + LABEL[s] + '</span>';
+  }
+
+  function houseSummary(h) {
+    var live = apps(h).filter(isLive);
+    var known = live.filter(function (o) { return status[o.link] && status[o.link] !== 'checking'; });
+    if (known.length < live.length) return { s: 'checking', text: 'Checking ' + count(live.length, 'app') };
+    var down = known.filter(function (o) { return status[o.link] === 'down'; }).length;
+    var slow = known.filter(function (o) { return status[o.link] === 'slow'; }).length;
+    if (down) return { s: 'down', text: down + ' of ' + live.length + ' down' };
+    if (slow) return { s: 'slow', text: slow + ' of ' + live.length + ' slow' };
+    return { s: 'up', text: 'All ' + live.length + ' up' };
+  }
+  function summaryHTML(h) {
+    var x = houseSummary(h);
+    return '<span class="hub-status" data-status="' + x.s + '" data-house="' + esc(h.vertical) + '"><span class="hub-dot" aria-hidden="true"></span>' + x.text + '</span>';
+  }
+
+  function paintStatus(link) {
+    document.querySelectorAll('.hub-status[data-link]').forEach(function (n) {
+      if (n.getAttribute('data-link') !== link) return;
+      n.outerHTML = statusHTML(link).replace('class="hub-status"', 'class="hub-status is-new"');
+    });
+    houses.forEach(function (h) {
+      var n = document.querySelector('.hub-status[data-house="' + h.vertical + '"]');
+      if (!n) return;
+      var before = n.getAttribute('data-status');
+      var x = houseSummary(h);
+      if (before === x.s && n.textContent === x.text) return;
+      n.outerHTML = summaryHTML(h).replace('class="hub-status"', 'class="hub-status' + (x.s === 'checking' ? '' : ' is-new') + '"');
+    });
+  }
+
+  function checkAll(force) {
+    var links = [];
+    houses.forEach(function (h) { apps(h).filter(isLive).forEach(function (o) { links.push(o.link); }); });
+    if (!force && loadCache()) {
+      // Cached run: check only the apps the earlier run did not finish.
+      links = links.filter(function (l) { return !status[l] || status[l] === 'checking'; });
+    } else {
+      status = {};
+      checkedAt = Date.now();
+    }
+    paintAll();
+    if (!links.length) return;
+    // First choice: the server check, which reads real status codes (a 404 counts as down).
+    // Fallback (local preview, or the function is unavailable): the browser probe per app.
+    fetch('api/status', { cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error(String(r.status)); return r.json(); })
+      .then(function (d) {
+        links.forEach(function (link) {
+          var x = d.apps && d.apps[link];
+          if (!x) { probeOne(link); return; }
+          status[link] = x.status;
+          paintStatus(link);
+        });
+        saveCache();
+      })
+      .catch(function () { links.forEach(probeOne); });
+  }
+  function probeOne(link) {
+    probe(link).then(function (s) { status[link] = s; saveCache(); paintStatus(link); });
+  }
+  function paintAll() {
+    Object.keys(status).forEach(paintStatus);
+    houses.forEach(function (h) { var l = apps(h).filter(isLive)[0]; if (l) paintStatus(l.link); });
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible' && houses.length && Date.now() - checkedAt > CACHE_MS) checkAll(true);
+  });
+
   function syncThemeColor() {
     var meta = document.querySelector('meta[name="theme-color"]');
     var c = getComputedStyle(root).getPropertyValue('--sat-theme-color').trim();
@@ -50,7 +152,7 @@
       return '<a class="sat-glass sat-card hub-card hub-rise" style="--i:' + (i + 2) + '" href="#' + esc(h.vertical) + '">' +
         '<div class="hub-card-top">' + (MARKS[h.vertical] || '') + '<svg class="hub-go" aria-hidden="true"><use href="#i-out"/></svg></div>' +
         '<h2 class="sat-h3">' + esc(h.title) + '</h2>' +
-        '<p class="hub-apps">' + count(apps(h).length, 'app') + ': ' + names + '</p></a>';
+        '<p class="hub-apps">' + count(apps(h).length, 'app') + ': ' + names + '</p>' + summaryHTML(h) + '</a>';
     }).join('');
     return '<section class="hub-hero">' +
         '<h1 class="sat-display hub-rise">Every day is <em>Saturday</em></h1>' +
@@ -68,13 +170,14 @@
       var live = isLive(o);
       var tag = live ? 'a' : 'div';
       var attrs = live
-        ? ' href="' + esc(o.link) + '" target="_blank" rel="noopener" aria-label="' + esc(o.title) + ', opens in a new tab"'
+        ? ' href="' + esc(o.link) + '" target="_blank" rel="noopener"'
         : '';
       return '<' + tag + ' class="sat-glass sat-card hub-card hub-rise' + (live ? '' : ' is-soon') + '" style="--i:' + (i + 2) + '"' + attrs + '>' +
         '<div class="hub-card-top"><span class="hub-logo' + (ink ? ' hub-logo--ink' : '') + '"><img src="' + esc(o.logo) + '" alt="" width="44" height="44" loading="lazy"></span>' +
         (live ? '<svg class="hub-go" aria-hidden="true"><use href="#i-out"/></svg>' : '<span class="sat-badge sat-badge--muted">Soon</span>') + '</div>' +
-        '<div><h2 class="sat-h3">' + esc(o.title) + '</h2>' +
+        '<div><h2 class="sat-h3">' + esc(o.title) + (live ? '<span class="sat-sr-only">, opens in a new tab.</span>' : '') + '</h2>' +
         (o.subtitle ? '<p class="sat-small sat-muted">' + esc(o.subtitle) + '</p>' : '') + '</div>' +
+        (live ? statusHTML(o.link) : '') +
         '</' + tag + '>';
     }).join('');
     return '<section class="hub-hero">' +
@@ -131,7 +234,7 @@
 
   fetch('links.json', { cache: 'no-cache' })
     .then(function (r) { if (!r.ok) throw new Error(String(r.status)); return r.json(); })
-    .then(function (data) { houses = data.links || []; render(false); })
+    .then(function (data) { houses = data.links || []; loadCache(); render(false); checkAll(false); })
     .catch(function () {
       main.innerHTML = '<p class="sat-body">Unable to load the app list. Reload the page to try again.</p>';
     });

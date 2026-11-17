@@ -90,3 +90,28 @@
 .hub-brand-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .hub-brand-text .sat-wordmark { font-size: 1.25rem; }
 .hub-home .sat-endorse { font-size: var(--sat-fs-caption); }
+
+/* Status dots: colour plus a word, never colour alone. */
+.hub-status {
+  display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
+  font-size: var(--sat-fs-caption); font-weight: 600; color: var(--sat-muted);
+  font-variant-numeric: tabular-nums;
+}
+.hub-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--sat-faint); flex: none; }
+.hub-status[data-status="up"] { color: var(--sat-pos); }
+.hub-status[data-status="up"] .hub-dot { background: var(--sat-pos); }
+.hub-status[data-status="down"] { color: var(--sat-neg); }
+.hub-status[data-status="down"] .hub-dot { background: var(--sat-neg); }
+.hub-status[data-status="slow"] { color: var(--sat-warn); }
+.hub-status[data-status="slow"] .hub-dot { background: var(--sat-warn); }
+.hub-status[data-status="checking"] .hub-dot { animation: hub-wait 1.2s ease-in-out infinite; }
+@keyframes hub-wait { 50% { opacity: 0.3; } }
+/* A fresh result settles in, and the dot pulses once. */
+.hub-status.is-new { animation: hub-fade var(--sat-dur-base) var(--sat-ease) both; }
+.hub-status.is-new .hub-dot { animation: hub-pulse 480ms var(--sat-ease) both; }
+@keyframes hub-pulse { 0% { transform: scale(0.4); } 60% { transform: scale(1.35); } 100% { transform: scale(1); } }
+@keyframes hub-fade { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .hub-status[data-status="checking"] .hub-dot, .hub-status.is-new .hub-dot { animation: none; }
+  .hub-status.is-new { animation: hub-fade 200ms ease-out both; }
+}
