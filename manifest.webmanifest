@@ -1,7 +1,7 @@
 {
   "name": "Saturday Services",
   "short_name": "Saturday",
-  "description": "Personal project hub",
+  "description": "Every Saturday Services app in one place.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -32,6 +32,48 @@
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
+    }
+  ],
+  "id": "/",
+  "shortcuts": [
+    {
+      "name": "Just Do Fin",
+      "short_name": "Finance",
+      "description": "Finance tracker",
+      "url": "/go?app=just-do-fin",
+      "icons": [
+        {
+          "src": "assets/logos/mn-dollar.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Backbar",
+      "short_name": "Backbar",
+      "description": "Recipes and tips",
+      "url": "/go?app=backbar",
+      "icons": [
+        {
+          "src": "assets/logos/options/shakes-b.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Vaela Compendium",
+      "short_name": "Vaela",
+      "description": "D&D wiki",
+      "url": "/go?app=vaela-compendium",
+      "icons": [
+        {
+          "src": "assets/logos/options/solutions-vaela.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
     }
   ]
 }

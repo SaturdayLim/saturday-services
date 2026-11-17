@@ -32,7 +32,7 @@
      Answer = up. Network failure = down. No answer within TIMEOUT = slow (Replit apps wake slowly).
      Results are cached in sessionStorage for CACHE_MS so moving between houses does not re-check. */
   var TIMEOUT = 8000, CACHE_MS = 5 * 60 * 1000, CACHE_KEY = 'hub-status';
-  var LABEL = { checking: 'Checking', up: 'Up', down: 'Down', slow: 'Slow' };
+  var LABEL = { checking: 'Checking', up: 'Up', down: 'Down', slow: 'Slow', offline: 'Offline' };
   var status = {};
   var checkedAt = 0;
 
@@ -56,13 +56,14 @@
   }
 
   function statusHTML(link) {
-    var s = status[link] || 'checking';
+    var s = navigator.onLine ? (status[link] || 'checking') : 'offline';
     return '<span class="hub-status" data-status="' + s + '" data-link="' + esc(link) + '"><span class="hub-dot" aria-hidden="true"></span>' + LABEL[s] + '</span>';
   }
 
   function houseSummary(h) {
     var live = apps(h).filter(isLive);
     var known = live.filter(function (o) { return status[o.link] && status[o.link] !== 'checking'; });
+    if (!navigator.onLine) return { s: 'offline', text: 'Offline' };
     if (known.length < live.length) return { s: 'checking', text: 'Checking ' + count(live.length, 'app') };
     var down = known.filter(function (o) { return status[o.link] === 'down'; }).length;
     var slow = known.filter(function (o) { return status[o.link] === 'slow'; }).length;
@@ -101,7 +102,7 @@
       checkedAt = Date.now();
     }
     paintAll();
-    if (!links.length) return;
+    if (!links.length || !navigator.onLine) return;
     // First choice: the server check, which reads real status codes (a 404 counts as down).
     // Fallback (local preview, or the function is unavailable): the browser probe per app.
     fetch('api/status', { cache: 'no-store' })
@@ -123,6 +124,15 @@
   function paintAll() {
     Object.keys(status).forEach(paintStatus);
     houses.forEach(function (h) { var l = apps(h).filter(isLive)[0]; if (l) paintStatus(l.link); });
+  }
+
+  // Offline: every dot says Offline. Back online: check again at once.
+  window.addEventListener('offline', function () { if (houses.length) render(false); });
+  window.addEventListener('online', function () { if (houses.length) { render(false); checkAll(true); } });
+
+  // Home screen app: offline shell (sw.js).
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
   }
 
   document.addEventListener('visibilitychange', function () {

@@ -115,3 +115,4 @@
   .hub-status[data-status="checking"] .hub-dot, .hub-status.is-new .hub-dot { animation: none; }
   .hub-status.is-new { animation: hub-fade 200ms ease-out both; }
 }
+.hub-status[data-status="offline"] .hub-dot { background: transparent; box-shadow: inset 0 0 0 1.5px var(--sat-muted); }
