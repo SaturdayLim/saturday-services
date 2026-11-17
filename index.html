@@ -2,41 +2,70 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>try{var t=localStorage.getItem('sat-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);var h=location.hash.slice(1);if(h==='shakes'||h==='solutions'||h==='mn')document.documentElement.setAttribute('data-skin',h)}catch(e){}</script>
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Saturday Services — personal project hub">
+<meta name="description" content="Saturday Services: every app across the houses, in one place.">
 <title>Saturday Services</title>
-<link rel="icon" type="image/svg+xml" href="assets/logos/services.svg">
+<link rel="icon" href="saturday/assets/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#0B0C10">
+<meta name="theme-color" content="#F4F1EA">
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Saturday Services">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&family=Instrument+Serif:ital@0;1&family=Elms+Sans:wght@400..700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Lato:wght@400;700&family=Pinyon+Script&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Saturday">
+<link rel="preload" href="saturday/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="saturday/css/tokens.css">
+<link rel="stylesheet" href="saturday/css/saturday.css">
+<link rel="stylesheet" href="saturday/css/skins-all.css">
+<link rel="stylesheet" href="saturday/css/fonts-houses.css">
+<link rel="stylesheet" href="css/hub.css">
+<script src="saturday/js/saturday.js" defer></script>
+<script src="js/hub.js" defer></script>
 </head>
-<body>
+<body class="sat has-bottombar">
 
-<canvas id="space" aria-hidden="true"></canvas>
-<div id="meteors" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+  <symbol id="i-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></symbol>
+</svg>
 
-<div id="brand" aria-label="Saturday Services"><span class="metal">SATURDAY&nbsp;SERVICES</span></div>
-<p id="tagline" class="tagline">Every day is Saturday</p>
+<a class="hub-skip sat-btn sat-btn--primary" href="#main">Skip to apps</a>
 
-<main id="pages" aria-live="polite"></main>
+<header class="sat-header sat-shell">
+  <div class="sat-header-bar sat-glass">
+    <a class="sat-brand hub-home" href="#" aria-label="Saturday Services, all houses">
+      <svg class="sat-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M33.37 11.6 A14 14 0 0 1 19.67 35.32"/><path d="M14.63 32.4 A14 14 0 0 1 28.33 8.68"/><path d="M6 43 H20 M28 43 H42"/></svg>
+      <span class="sat-wordmark">Saturday Services</span>
+    </a>
+    <nav class="sat-seg sat-desktop-only hub-tabs" aria-label="Houses" data-tabs></nav>
+    <div class="sat-seg sat-theme-toggle sat-desktop-only" role="radiogroup" aria-label="Theme">
+      <button role="radio" data-sat-theme="auto" aria-checked="true" aria-label="Auto theme" title="Follow device"><svg><use href="#i-auto"/></svg></button>
+      <button role="radio" data-sat-theme="light" aria-checked="false" aria-label="Light theme" title="Light"><svg><use href="#i-sun"/></svg></button>
+      <button role="radio" data-sat-theme="dark" aria-checked="false" aria-label="Dark theme" title="Dark"><svg><use href="#i-moon"/></svg></button>
+    </div>
+    <button class="sat-btn sat-iconbtn sat-btn--ghost sat-mobile-only" data-sat-theme-cycle aria-label="Change theme">
+      <svg class="sat-theme-icon sat-theme-icon--auto"><use href="#i-auto"/></svg>
+      <svg class="sat-theme-icon sat-theme-icon--light"><use href="#i-sun"/></svg>
+      <svg class="sat-theme-icon sat-theme-icon--dark"><use href="#i-moon"/></svg>
+    </button>
+  </div>
+</header>
 
-<div class="deck-ui">
-  <button id="prev" class="deck-btn" aria-label="Previous page"><span aria-hidden="true">←</span></button>
-  <span id="counter" class="deck-counter"></span>
-  <button id="next" class="deck-btn" aria-label="Next page"><span aria-hidden="true">→</span></button>
-</div>
+<main id="main" class="sat-shell hub-main" tabindex="-1">
+  <p class="sat-muted">Loading the houses.</p>
+</main>
 
-<footer class="micro">PERSONAL PROJECT HUB</footer>
+<footer class="sat-shell hub-foot">
+  <p class="hub-drink sat-small sat-muted" hidden>For guests of legal drinking age. Drink responsibly.</p>
+  <p class="sat-endorse">Saturday Services. Every day is Saturday.</p>
+</footer>
 
-<script type="module" src="js/main.js"></script>
+<nav class="sat-bottombar sat-glass-2 hub-tabs hub-tabs--bar" aria-label="Houses" data-tabs></nav>
+
+<noscript><p class="sat-shell">This hub needs JavaScript to list the apps.</p></noscript>
 </body>
 </html>

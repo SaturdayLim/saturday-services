@@ -1,0 +1,92 @@
+/* Saturday Services hub. Built on the Saturday Signature kit: only --sat-* tokens here. */
+
+.hub-skip { position: absolute; left: var(--sat-space-3); top: -60px; z-index: 60; }
+.hub-skip:focus-visible { top: calc(var(--sat-space-3) + env(safe-area-inset-top)); }
+
+.sat-header { padding-top: calc(var(--sat-space-3) + env(safe-area-inset-top)); }
+.hub-home { text-decoration: none; color: var(--sat-text); min-height: 44px; }
+.hub-home .sat-mark { --sat-mark-h: 30px; }
+.hub-home .sat-wordmark { white-space: nowrap; }
+
+/* House tabs: links styled like the kit's segmented control. */
+.hub-tabs a {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 32px; padding: 0 var(--sat-space-3);
+  border-radius: calc(var(--sat-radius-sm) - 3px);
+  font-size: var(--sat-fs-small); font-weight: 600; white-space: nowrap;
+  color: var(--sat-muted); text-decoration: none;
+  border: 1px solid transparent;
+  transition: color var(--sat-dur-fast) var(--sat-ease), background-color var(--sat-dur-fast) var(--sat-ease);
+}
+.hub-tabs a:hover { color: var(--sat-text); }
+.hub-tabs a[aria-current="page"] {
+  color: var(--sat-text); background: var(--sat-glass-2); border-color: var(--sat-glass-edge);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), inset 0 1px 0 var(--sat-glass-hi);
+}
+.hub-tabs--bar { gap: 2px; }
+.hub-tabs--bar a { flex: 1; min-height: 44px; padding: 0 var(--sat-space-2); }
+.hub-tabs--bar a[aria-current="page"] { background: var(--sat-well); box-shadow: none; border-color: transparent; }
+
+/* Layout */
+.hub-main { display: flex; flex-direction: column; gap: var(--sat-space-12); padding-block: var(--sat-space-6) var(--sat-space-12); outline: none; }
+.hub-hero { display: flex; flex-direction: column; gap: var(--sat-space-4); padding-top: var(--sat-space-6); }
+.hub-hero .sat-lede { max-width: 34ch; }
+.hub-section { display: flex; flex-direction: column; gap: var(--sat-space-4); }
+.hub-foot { display: flex; flex-direction: column; gap: var(--sat-space-2); padding-block: var(--sat-space-6) var(--sat-space-12); }
+
+/* House lockup on a house page */
+.hub-lockup { display: flex; align-items: center; gap: var(--sat-space-4); }
+.hub-lockup .sat-mark { --sat-mark-h: 64px; }
+@media (min-width: 640px) { .hub-lockup .sat-mark { --sat-mark-h: 84px; } }
+.hub-lockup > div { display: flex; flex-direction: column; gap: var(--sat-space-2); min-width: 0; }
+
+/* Cards that are links */
+.hub-card {
+  display: flex; flex-direction: column; gap: var(--sat-space-3);
+  color: var(--sat-text); text-decoration: none;
+  min-height: 44px;
+  transition: transform var(--sat-dur-base) var(--sat-ease), box-shadow var(--sat-dur-base) var(--sat-ease);
+}
+.sat .hub-card:hover { text-decoration: none; }
+@media (hover: hover) and (pointer: fine) {
+  .hub-card:hover { transform: translateY(-2px); box-shadow: var(--sat-shadow-lg); }
+}
+.hub-card:active { transform: scale(0.985); transition-duration: var(--sat-dur-fast); }
+.hub-card .hub-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sat-space-3); }
+.hub-card .hub-go { width: 20px; height: 20px; color: var(--sat-muted); flex: none; transition: transform var(--sat-dur-base) var(--sat-ease), color var(--sat-dur-base) var(--sat-ease); }
+@media (hover: hover) and (pointer: fine) {
+  .hub-card:hover .hub-go { color: var(--sat-accent-text); transform: translate(2px, -2px); }
+}
+.hub-card .sat-mark { --sat-mark-h: 40px; }
+.hub-card p { margin: 0; }
+.hub-apps { font-size: var(--sat-fs-small); color: var(--sat-muted); }
+
+/* App logo tile */
+.hub-logo {
+  width: 64px; height: 64px; flex: none;
+  display: grid; place-items: center;
+  border-radius: var(--sat-radius-md, 14px);
+  background: var(--sat-well);
+}
+.hub-logo img { width: 44px; height: 44px; object-fit: contain; }
+/* Line art drawn in black (M&N) turns light in dark mode. */
+:root[data-theme="dark"] .hub-logo--ink img { filter: invert(1); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hub-logo--ink img { filter: invert(1); } }
+
+.hub-card.is-soon { opacity: 0.72; }
+
+/* View change: rise in, staggered 30ms. */
+.hub-rise { animation: hub-rise var(--sat-dur-slow) var(--sat-ease) both; animation-delay: calc(var(--i, 0) * 30ms); }
+@keyframes hub-rise { from { opacity: 0; transform: translateY(8px); } }
+@media (prefers-reduced-motion: reduce) {
+  .hub-rise { animation: hub-fade 200ms ease-out both; }
+  @keyframes hub-fade { from { opacity: 0; } }
+  .hub-card, .hub-card .hub-go { transition: none; }
+}
+
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 320ms; }
+
+.sat .hub-main:focus, .sat .hub-main:focus-visible { outline: none; }
+.hub-brand-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.hub-brand-text .sat-wordmark { font-size: 1.25rem; }
+.hub-home .sat-endorse { font-size: var(--sat-fs-caption); }

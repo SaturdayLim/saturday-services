@@ -1,0 +1,9 @@
+/* Saturday Signature v2.0.0: display faces for the houses that do not use the bundled fonts.
+   Load after saturday.css, only on pages that use these skins:
+     Saturday Shakes     Bodoni Moda          (data-skin="shakes")
+     Saturday Solutions  Bricolage Grotesque  (data-skin="solutions")
+     M&N Collective      Cormorant Garamond   (data-skin="mn")
+   All three are SIL Open Font License 1.1. This file loads them from Google Fonts, so pages need internet.
+   For offline or one-file builds, download the woff2 files into fonts/, add @font-face lines to saturday.css,
+   and drop this file (tools/inline-kit.js then embeds them). */
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap');

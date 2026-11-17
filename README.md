@@ -7,10 +7,10 @@ Live at **saturday-services.vercel.app** — static site, no build step, auto-de
 
 ## How it works
 
-The hero is the metallic **SATURDAY SERVICES** wordmark on a continuous starfield; scrolling,
-arrow keys, or Enter snap between full-viewport pages (one per `links.json` entry). The wordmark
-glides to the top-left corner when you leave the hero. Clicking any glowing logo opens its app
-in a new tab. The M&N Collective page inverts to daytime.
+Built on the Saturday Signature kit v2 (`saturday/`, copied from the kit; edit tokens there, never the generated CSS).
+Home lists the houses. Each house page (`#shakes`, `#solutions`, `#mn`) switches `<html data-skin>`, so the
+whole page wears that house: colour, mesh, display face and mark. Left and right arrow keys step through the houses.
+Phone: house tabs sit in the bottom bar. Desktop: in the header.
 
 ## Add a page or an app
 
@@ -33,7 +33,8 @@ cp assets/logos/options/services-b-mono.svg assets/logos/services-mono.svg
 index.html            the hub (starfield + page-snap navigation)
 logo-gallery.html     logo option picker
 links.json            THE file you edit to add pages/apps
-css/ js/              site (main.js: starfield, pages, transitions)
+css/hub.css js/hub.js the hub (renders links.json into kit components)
+saturday/             Saturday Signature kit v2 (tokens, components, fonts, marks)
 js/scene.js           unused reference implementation for the 3D pipeline
 assets/logos/         final marks (+ options/ = 3 explorations per mark)
 design/               transferrable design suites (saturday-core + verticals)
