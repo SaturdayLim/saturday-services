@@ -183,7 +183,7 @@
         ? ' href="' + esc(o.link) + '" target="_blank" rel="noopener"'
         : '';
       return '<' + tag + ' class="sat-glass sat-card hub-card hub-rise' + (live ? '' : ' is-soon') + '" style="--i:' + (i + 2) + '"' + attrs + '>' +
-        '<div class="hub-card-top"><span class="hub-logo' + (ink ? ' hub-logo--ink' : '') + '"><img src="' + esc(o.logo) + '" alt="" width="44" height="44" loading="lazy"></span>' +
+        '<div class="hub-card-top"><span class="hub-logo' + (ink ? ' hub-logo--ink' : '') + (o.logoTone === 'light' ? ' hub-logo--pale' : '') + '"><img src="' + esc(o.logo) + '" alt="" width="44" height="44" loading="lazy"></span>' +
         (live ? '<svg class="hub-go" aria-hidden="true"><use href="#i-out"/></svg>' : '<span class="sat-badge sat-badge--muted">Soon</span>') + '</div>' +
         '<div><h2 class="sat-h3">' + esc(o.title) + (live ? '<span class="sat-sr-only">, opens in a new tab.</span>' : '') + '</h2>' +
         (o.subtitle ? '<p class="sat-small sat-muted">' + esc(o.subtitle) + '</p>' : '') + '</div>' +

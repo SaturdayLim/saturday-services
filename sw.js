@@ -3,7 +3,7 @@
    links.json: network first, cache when offline, so a new app shows up on the next visit.
    /api/status and other sites: never cached; the page handles offline itself.
    Bump VERSION when the precache list changes. */
-var VERSION = 'hub-v3';
+var VERSION = 'hub-v4';
 var SHELL = [
   './',
   'go',

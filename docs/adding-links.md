@@ -31,3 +31,7 @@ Field notes:
 - `link` on the page itself: only for single-app pages — the big logo becomes clickable. Use `null` when the page has `options`.
 - Option logos: SVGs are inlined at runtime, so glows and embedded images work. Clicking a logo opens the app in a new tab.
 - Schema: `docs/links.schema.json`.
+
+## Pale logos
+
+If an app logo is white or pale (it vanishes on the light theme), add `"logoTone": "light"` to that app in `links.json`. The hub then shows it on a dark tile.

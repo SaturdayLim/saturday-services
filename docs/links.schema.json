@@ -29,14 +29,14 @@
           },
           "vertical": {
             "type": "string",
-            "description": "services | shakes | solutions | mn — controls accent + glow color; unknown values fall back to services"
+            "description": "shakes | solutions | mn. Sets the page skin (colour, fonts, mark) and the URL (#shakes)."
           },
           "theme": {
             "enum": [
               "day",
               "night"
             ],
-            "description": "day = light daytime inversion (M&N). Default night."
+            "description": "day = this house's app logos are dark line art; the hub turns them light in dark mode (M&N)."
           },
           "logo": {
             "type": "string",
@@ -93,6 +93,12 @@
                 "subtitle": {
                   "type": "string",
                   "description": "Optional script-face subtitle under the option label (e.g. 'Finance Tracker')"
+                },
+                "logoTone": {
+                  "enum": [
+                    "light"
+                  ],
+                  "description": "light = the logo is drawn in white or pale colours; the hub puts it on a dark tile in the light theme so it stays visible."
                 }
               }
             }

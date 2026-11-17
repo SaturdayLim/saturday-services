@@ -36,6 +36,7 @@
           "title": "TapTap",
           "subtitle": "4-choice Lockin",
           "logo": "assets/logos/options/solutions-taptap.svg",
+          "logoTone": "light",
           "link": "https://tap4mike.replit.app/",
           "status": "live"
         },
