@@ -156,7 +156,6 @@
   }
 
   function homeView() {
-    var live = houses.reduce(function (n, h) { return n + apps(h).filter(isLive).length; }, 0);
     var cards = houses.map(function (h, i) {
       var names = apps(h).map(function (o) { return esc(o.title); }).join(', ');
       return '<a class="sat-glass sat-card hub-card hub-rise" style="--i:' + (i + 2) + '" href="#' + esc(h.vertical) + '">' +
@@ -165,8 +164,7 @@
         '<p class="hub-apps">' + count(apps(h).length, 'app') + ': ' + names + '</p>' + summaryHTML(h) + '</a>';
     }).join('');
     return '<section class="hub-hero">' +
-        '<h1 class="sat-display hub-rise">Every day is <em>Saturday</em></h1>' +
-        '<p class="sat-lede hub-rise" style="--i:1">' + count(live, 'app') + ' across ' + count(houses.length, 'house') + ', one tap away.</p>' +
+        '<h1 class="sat-display hub-rise">Saturday Services</h1>' +
       '</section>' +
       '<section class="hub-section" aria-labelledby="housesCap">' +
         '<h2 class="sat-caption" id="housesCap">Houses <span class="sat-qual">(' + houses.length + ')</span></h2>' +
