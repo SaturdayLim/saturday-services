@@ -53,6 +53,14 @@
           "logo": "assets/logos/options/solutions-vdeck.svg",
           "link": "https://v-deck.vercel.app/",
           "status": "live"
+        },
+        {
+          "title": "Felt",
+          "subtitle": "Home Poker Tracker",
+          "logo": "assets/logos/options/solutions-felt.svg",
+          "logoTone": "dark",
+          "link": "https://saturdaylim.github.io/felt-poker/",
+          "status": "live"
         }
       ]
     },
